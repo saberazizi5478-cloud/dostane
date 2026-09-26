@@ -8,7 +8,6 @@
 
   <title>دوستانه</title>
 
-  <!-- PWA -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#2563eb">
   <meta name="mobile-web-app-capable" content="yes">
@@ -53,9 +52,7 @@
       display: none !important;
     }
 
-    /* =========================
-       AUTH
-    ========================= */
+    /* AUTH */
 
     #authPage {
       width: 100%;
@@ -192,9 +189,7 @@
       color: #15803d;
     }
 
-    /* =========================
-       APP
-    ========================= */
+    /* APP */
 
     #appPage {
       width: 100%;
@@ -269,9 +264,7 @@
       overflow-y: auto;
     }
 
-    /* =========================
-       HOME
-    ========================= */
+    /* HOME */
 
     .home-header {
       padding: 20px 16px 10px;
@@ -362,23 +355,13 @@
       margin-bottom: 5px;
     }
 
-    .user-email {
-      color: #98a2b3;
-      font-size: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
     .empty-state {
       padding: 40px 20px;
       text-align: center;
       color: #98a2b3;
     }
 
-    /* =========================
-       PROFILE
-    ========================= */
+    /* PROFILE */
 
     .profile-page {
       padding: 25px 16px;
@@ -417,9 +400,7 @@
       font-size: 13px;
     }
 
-    /* =========================
-       CHAT
-    ========================= */
+    /* CHAT */
 
     #chatPage {
       position: absolute;
@@ -569,9 +550,7 @@
       opacity: .5;
     }
 
-    /* =========================
-       LOADING
-    ========================= */
+    /* LOADING */
 
     #loading {
       position: fixed;
@@ -600,11 +579,10 @@
       }
     }
 
-    /* =========================
-       DESKTOP
-    ========================= */
+    /* DESKTOP */
 
     @media (min-width: 800px) {
+
       .app {
         box-shadow: 0 0 40px rgba(0,0,0,.06);
         background: #f4f7fb;
@@ -628,19 +606,13 @@
 
 <body>
 
-<!-- =========================
-     LOADING
-========================= -->
-
 <div id="loading">
   <div class="loader"></div>
   <div>در حال آماده‌سازی دوستانه...</div>
 </div>
 
 
-<!-- =========================
-     AUTH PAGE
-========================= -->
+<!-- AUTH -->
 
 <div id="authPage" class="hidden">
 
@@ -661,6 +633,7 @@
 
       <div class="input-group">
         <label>ایمیل</label>
+
         <input
           id="loginEmail"
           class="input"
@@ -670,8 +643,10 @@
         >
       </div>
 
+
       <div class="input-group">
         <label>رمز عبور</label>
+
         <input
           id="loginPassword"
           class="input"
@@ -681,17 +656,28 @@
         >
       </div>
 
-      <button class="primary-btn" onclick="login()">
+
+      <button
+        class="primary-btn"
+        onclick="login()"
+      >
         ورود
       </button>
 
-      <button class="text-btn" onclick="showSignup()">
+
+      <button
+        class="text-btn"
+        onclick="showSignup()"
+      >
         حساب ندارم؛ ثبت‌نام می‌کنم
       </button>
 
       <br>
 
-      <button class="text-btn" onclick="showForgotPassword()">
+      <button
+        class="text-btn"
+        onclick="showForgotPassword()"
+      >
         رمز عبورم را فراموش کرده‌ام
       </button>
 
@@ -704,6 +690,7 @@
 
       <div class="input-group">
         <label>نام شما</label>
+
         <input
           id="signupName"
           class="input"
@@ -713,8 +700,10 @@
         >
       </div>
 
+
       <div class="input-group">
         <label>ایمیل</label>
+
         <input
           id="signupEmail"
           class="input"
@@ -724,8 +713,10 @@
         >
       </div>
 
+
       <div class="input-group">
         <label>رمز عبور</label>
+
         <input
           id="signupPassword"
           class="input"
@@ -735,11 +726,19 @@
         >
       </div>
 
-      <button class="primary-btn" onclick="signup()">
+
+      <button
+        class="primary-btn"
+        onclick="signup()"
+      >
         ساخت حساب
       </button>
 
-      <button class="text-btn" onclick="showLogin()">
+
+      <button
+        class="text-btn"
+        onclick="showLogin()"
+      >
         قبلاً حساب دارم
       </button>
 
@@ -752,6 +751,7 @@
 
       <div class="input-group">
         <label>ایمیل حساب</label>
+
         <input
           id="forgotEmail"
           class="input"
@@ -760,11 +760,19 @@
         >
       </div>
 
-      <button class="primary-btn" onclick="forgotPassword()">
+
+      <button
+        class="primary-btn"
+        onclick="forgotPassword()"
+      >
         ارسال لینک بازیابی
       </button>
 
-      <button class="text-btn" onclick="showLogin()">
+
+      <button
+        class="text-btn"
+        onclick="showLogin()"
+      >
         برگشت به ورود
       </button>
 
@@ -777,6 +785,7 @@
 
       <div class="input-group">
         <label>رمز عبور جدید</label>
+
         <input
           id="newPassword"
           class="input"
@@ -785,7 +794,11 @@
         >
       </div>
 
-      <button class="primary-btn" onclick="updatePassword()">
+
+      <button
+        class="primary-btn"
+        onclick="updatePassword()"
+      >
         ذخیره رمز جدید
       </button>
 
@@ -799,9 +812,7 @@
 </div>
 
 
-<!-- =========================
-     APP PAGE
-========================= -->
+<!-- APP -->
 
 <div id="appPage" class="hidden">
 
@@ -810,9 +821,17 @@
     <div class="topbar">
 
       <div class="brand">
-        <div class="brand-icon">د</div>
-        <span>دوستانه</span>
+
+        <div class="brand-icon">
+          د
+        </div>
+
+        <span>
+          دوستانه
+        </span>
+
       </div>
+
 
       <div class="top-actions">
 
@@ -823,6 +842,7 @@
         >
           👤
         </button>
+
 
         <button
           class="icon-btn"
@@ -839,16 +859,19 @@
 
     <div class="content">
 
-
       <!-- HOME -->
 
       <div id="homePage" class="page">
 
         <div class="home-header">
 
-          <div id="welcomeText" class="welcome">
+          <div
+            id="welcomeText"
+            class="welcome"
+          >
             سلام 👋
           </div>
+
 
           <div class="muted">
             دوستانت رو پیدا کن و گفتگو رو شروع کن
@@ -875,7 +898,10 @@
         </div>
 
 
-        <div id="usersList" class="users-list">
+        <div
+          id="usersList"
+          class="users-list"
+        >
 
           <div class="empty-state">
             در حال بارگذاری کاربران...
@@ -888,25 +914,41 @@
 
       <!-- PROFILE -->
 
-      <div id="profilePage" class="page hidden">
+      <div
+        id="profilePage"
+        class="page hidden"
+      >
 
         <div class="profile-page">
 
           <div class="profile-card">
 
-            <div id="profileAvatar" class="profile-avatar">
+            <div
+              id="profileAvatar"
+              class="profile-avatar"
+            >
               د
             </div>
 
-            <div id="profileName" class="profile-name">
+
+            <div
+              id="profileName"
+              class="profile-name"
+            >
               -
             </div>
 
-            <div id="profileEmail" class="profile-email">
+
+            <div
+              id="profileEmail"
+              class="profile-email"
+            >
               -
             </div>
+
 
             <br>
+
 
             <button
               class="secondary-btn"
@@ -924,7 +966,10 @@
 
       <!-- CHAT -->
 
-      <div id="chatPage" class="hidden">
+      <div
+        id="chatPage"
+        class="hidden"
+      >
 
         <div class="chat-header">
 
@@ -932,21 +977,29 @@
             class="back-btn"
             onclick="closeChat()"
           >
-            → 
+            →
           </button>
 
 
           <div class="chat-user">
 
-            <div id="chatAvatar" class="avatar">
+            <div
+              id="chatAvatar"
+              class="avatar"
+            >
               د
             </div>
 
+
             <div class="chat-user-info">
 
-              <div id="chatUserName" class="chat-user-name">
+              <div
+                id="chatUserName"
+                class="chat-user-name"
+              >
                 -
               </div>
+
 
               <div class="chat-status">
                 گفتگو
@@ -959,7 +1012,10 @@
         </div>
 
 
-        <div id="messages" class="messages">
+        <div
+          id="messages"
+          class="messages"
+        >
 
           <div class="empty-state">
             هنوز پیامی وجود ندارد
@@ -978,6 +1034,7 @@
             onkeydown="handleMessageKey(event)"
           ></textarea>
 
+
           <button
             id="sendButton"
             class="send-btn"
@@ -989,7 +1046,6 @@
         </div>
 
       </div>
-
 
     </div>
 
@@ -1010,6 +1066,7 @@
   const SUPABASE_KEY =
     "sb_publishable_ki1URRpDpSc-E5h5HQiq3w_2_-LHIHa";
 
+
   const supabaseClient =
     window.supabase.createClient(
       SUPABASE_URL,
@@ -1022,6 +1079,7 @@
   ========================================================= */
 
   let currentUser = null;
+
   let currentProfile = null;
 
   let allUsers = [];
@@ -1042,9 +1100,13 @@
 
   function escapeHtml(value) {
 
-    if (value === null || value === undefined) {
+    if (
+      value === null ||
+      value === undefined
+    ) {
       return "";
     }
+
 
     return String(value)
       .replace(/&/g, "&amp;")
@@ -1052,6 +1114,7 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
+
   }
 
 
@@ -1060,7 +1123,11 @@
     const text =
       String(name || "د").trim();
 
-    return text.charAt(0) || "د";
+    return (
+      text.charAt(0) ||
+      "د"
+    );
+
   }
 
 
@@ -1080,11 +1147,16 @@
   }
 
 
-  function showAuthMessage(message, type = "error") {
+  function showAuthMessage(
+    message,
+    type = "error"
+  ) {
 
-    const box = $("authMessage");
+    const box =
+      $("authMessage");
 
-    box.textContent = message;
+    box.textContent =
+      message;
 
     box.className =
       "auth-message " + type;
@@ -1094,11 +1166,14 @@
 
   function clearAuthMessage() {
 
-    const box = $("authMessage");
+    const box =
+      $("authMessage");
 
-    box.textContent = "";
+    box.textContent =
+      "";
 
-    box.className = "auth-message";
+    box.className =
+      "auth-message";
 
   }
 
@@ -1109,12 +1184,24 @@
 
   function hideAllAuthForms() {
 
-    $("loginForm").classList.add("hidden");
-    $("signupForm").classList.add("hidden");
-    $("forgotForm").classList.add("hidden");
-    $("resetForm").classList.add("hidden");
+    $("loginForm")
+      .classList
+      .add("hidden");
+
+    $("signupForm")
+      .classList
+      .add("hidden");
+
+    $("forgotForm")
+      .classList
+      .add("hidden");
+
+    $("resetForm")
+      .classList
+      .add("hidden");
 
     clearAuthMessage();
+
   }
 
 
@@ -1122,7 +1209,10 @@
 
     hideAllAuthForms();
 
-    $("loginForm").classList.remove("hidden");
+    $("loginForm")
+      .classList
+      .remove("hidden");
+
   }
 
 
@@ -1130,7 +1220,10 @@
 
     hideAllAuthForms();
 
-    $("signupForm").classList.remove("hidden");
+    $("signupForm")
+      .classList
+      .remove("hidden");
+
   }
 
 
@@ -1138,7 +1231,10 @@
 
     hideAllAuthForms();
 
-    $("forgotForm").classList.remove("hidden");
+    $("forgotForm")
+      .classList
+      .remove("hidden");
+
   }
 
 
@@ -1146,7 +1242,10 @@
 
     hideAllAuthForms();
 
-    $("resetForm").classList.remove("hidden");
+    $("resetForm")
+      .classList
+      .remove("hidden");
+
   }
 
 
@@ -1154,11 +1253,15 @@
      CREATE PROFILE
   ========================================================= */
 
-  async function createProfile(user, displayName) {
+  async function createProfile(
+    user,
+    displayName
+  ) {
 
     const name =
       String(displayName || "")
         .trim();
+
 
     const { error } =
       await supabaseClient
@@ -1166,19 +1269,21 @@
         .upsert(
           {
             id: user.id,
-            display_name: name,
-            email: user.email || ""
+            display_name: name
           },
           {
             onConflict: "id"
           }
         );
 
+
     if (error) {
+
       console.error(
         "PROFILE ERROR:",
         error
       );
+
     }
 
   }
@@ -1192,47 +1297,69 @@
 
     clearAuthMessage();
 
+
     const name =
-      $("signupName").value.trim();
+      $("signupName")
+        .value
+        .trim();
+
 
     const email =
-      $("signupEmail").value.trim();
+      $("signupEmail")
+        .value
+        .trim();
+
 
     const password =
-      $("signupPassword").value;
+      $("signupPassword")
+        .value;
+
 
     if (!name) {
+
       showAuthMessage(
         "لطفاً نامت رو وارد کن."
       );
+
       return;
     }
 
+
     if (!email) {
+
       showAuthMessage(
         "لطفاً ایمیل رو وارد کن."
       );
+
       return;
     }
 
+
     if (password.length < 6) {
+
       showAuthMessage(
         "رمز عبور باید حداقل ۶ کاراکتر باشه."
       );
+
       return;
     }
 
 
-    const { data, error } =
-      await supabaseClient.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            display_name: name
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.signUp(
+        {
+          email,
+          password,
+          options: {
+            data: {
+              display_name: name
+            }
           }
         }
-      });
+      );
 
 
     if (error) {
@@ -1257,20 +1384,19 @@
     }
 
 
-    showAuthMessage(
-      "حساب با موفقیت ساخته شد.",
-      "success"
-    );
-
-
     if (data.session) {
+
+      showAuthMessage(
+        "حساب ساخته شد. در انتظار تأیید مدیر هستید.",
+        "success"
+      );
 
       await loadApp();
 
     } else {
 
       showAuthMessage(
-        "حساب ساخته شد. اگر تأیید ایمیل فعال است، ایمیلت رو تأیید کن و بعد وارد شو.",
+        "حساب ساخته شد. ایمیلت رو تأیید کن و بعد وارد شو.",
         "success"
       );
 
@@ -1289,14 +1415,22 @@
 
     clearAuthMessage();
 
+
     const email =
-      $("loginEmail").value.trim();
+      $("loginEmail")
+        .value
+        .trim();
+
 
     const password =
-      $("loginPassword").value;
+      $("loginPassword")
+        .value;
 
 
-    if (!email || !password) {
+    if (
+      !email ||
+      !password
+    ) {
 
       showAuthMessage(
         "ایمیل و رمز عبور رو وارد کن."
@@ -1306,11 +1440,17 @@
     }
 
 
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth
+        .signInWithPassword(
+          {
+            email,
+            password
+          }
+        );
 
 
     if (error) {
@@ -1342,8 +1482,11 @@
 
     clearAuthMessage();
 
+
     const email =
-      $("forgotEmail").value.trim();
+      $("forgotEmail")
+        .value
+        .trim();
 
 
     if (!email) {
@@ -1361,13 +1504,16 @@
       window.location.pathname;
 
 
-    const { error } =
-      await supabaseClient.auth.resetPasswordForEmail(
-        email,
-        {
-          redirectTo
-        }
-      );
+    const {
+      error
+    } =
+      await supabaseClient.auth
+        .resetPasswordForEmail(
+          email,
+          {
+            redirectTo
+          }
+        );
 
 
     if (error) {
@@ -1395,7 +1541,8 @@
   async function updatePassword() {
 
     const password =
-      $("newPassword").value;
+      $("newPassword")
+        .value;
 
 
     if (password.length < 6) {
@@ -1408,10 +1555,15 @@
     }
 
 
-    const { error } =
-      await supabaseClient.auth.updateUser({
-        password
-      });
+    const {
+      error
+    } =
+      await supabaseClient.auth
+        .updateUser(
+          {
+            password
+          }
+        );
 
 
     if (error) {
@@ -1449,7 +1601,8 @@
         user
       }
     } =
-      await supabaseClient.auth.getUser();
+      await supabaseClient.auth
+        .getUser();
 
 
     if (!user) {
@@ -1464,11 +1617,10 @@
       user;
 
 
-    await createProfile(
-      user,
-      user.user_metadata?.display_name || ""
-    );
-
+    /*
+      فقط اطلاعات عمومی پروفایل
+      خوانده می‌شود.
+    */
 
     const {
       data: profile,
@@ -1476,8 +1628,13 @@
     } =
       await supabaseClient
         .from("profiles")
-        .select("*")
-        .eq("id", user.id)
+        .select(
+          "id,display_name,avatar_url,created_at,updated_at,approved"
+        )
+        .eq(
+          "id",
+          user.id
+        )
         .maybeSingle();
 
 
@@ -1488,18 +1645,79 @@
         error
       );
 
+      showAuthMessage(
+        "خطا در دریافت اطلاعات حساب."
+      );
+
+      return;
     }
 
 
-    currentProfile =
-      profile || {
-        id: user.id,
-        display_name:
-          user.user_metadata?.display_name ||
-          "کاربر",
-        email:
-          user.email || ""
-      };
+    /*
+      اگر پروفایل وجود نداشت،
+      تلاش می‌کنیم آن را بسازیم.
+    */
+
+    if (!profile) {
+
+      await createProfile(
+        user,
+        user.user_metadata?.display_name || ""
+      );
+
+      const result =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "id,display_name,avatar_url,created_at,updated_at,approved"
+          )
+          .eq(
+            "id",
+            user.id
+          )
+          .maybeSingle();
+
+      currentProfile =
+        result.data || {
+          id: user.id,
+          display_name:
+            user.user_metadata?.display_name ||
+            "کاربر"
+        };
+
+    } else {
+
+      currentProfile =
+        profile;
+
+    }
+
+
+    /*
+      بررسی تأیید مدیر
+    */
+
+    if (
+      !currentProfile.approved
+    ) {
+
+      $("appPage")
+        .classList
+        .add("hidden");
+
+      $("authPage")
+        .classList
+        .remove("hidden");
+
+      showLogin();
+
+      showAuthMessage(
+        "حساب شما هنوز توسط مدیر تأیید نشده است.",
+        "error"
+      );
+
+      return;
+    }
 
 
     $("welcomeText").textContent =
@@ -1511,12 +1729,18 @@
       " 👋";
 
 
-    $("authPage").classList.add("hidden");
+    $("authPage")
+      .classList
+      .add("hidden");
 
-    $("appPage").classList.remove("hidden");
+
+    $("appPage")
+      .classList
+      .remove("hidden");
 
 
     showHome();
+
 
     await loadUsers();
 
@@ -1529,9 +1753,14 @@
 
   function showAuthPage() {
 
-    $("appPage").classList.add("hidden");
+    $("appPage")
+      .classList
+      .add("hidden");
 
-    $("authPage").classList.remove("hidden");
+
+    $("authPage")
+      .classList
+      .remove("hidden");
 
   }
 
@@ -1542,6 +1771,11 @@
 
   async function loadUsers() {
 
+    if (!currentUser) {
+      return;
+    }
+
+
     const {
       data,
       error
@@ -1549,11 +1783,15 @@
       await supabaseClient
         .from("profiles")
         .select(
-          "id,display_name,email,avatar_url,created_at"
+          "id,display_name,avatar_url,created_at"
         )
         .neq(
           "id",
           currentUser.id
+        )
+        .eq(
+          "approved",
+          true
         )
         .order(
           "display_name",
@@ -1570,12 +1808,14 @@
         error
       );
 
+
       $("usersList").innerHTML =
         `
         <div class="empty-state">
           خطا در دریافت کاربران
         </div>
         `;
+
 
       return;
     }
@@ -1611,60 +1851,60 @@
         </div>
         `;
 
+
       return;
     }
 
 
     list.innerHTML =
       users
-        .map(user => {
+        .map(
+          user => {
 
-          const name =
-            user.display_name ||
-            "کاربر";
+            const name =
+              user.display_name ||
+              "کاربر";
 
 
-          const avatar =
-            user.avatar_url
-              ?
-              `
-              <img
-                src="${escapeHtml(user.avatar_url)}"
-                alt=""
+            const avatar =
+              user.avatar_url
+                ?
+                `
+                <img
+                  src="${escapeHtml(user.avatar_url)}"
+                  alt=""
+                >
+                `
+                :
+                escapeHtml(
+                  getInitial(name)
+                );
+
+
+            return `
+              <div
+                class="user-item"
+                onclick="openChat('${escapeHtml(user.id)}')"
               >
-              `
-              :
-              escapeHtml(
-                getInitial(name)
-              );
 
-
-          return `
-            <div
-              class="user-item"
-              onclick="openChat('${user.id}')"
-            >
-
-              <div class="avatar">
-                ${avatar}
-              </div>
-
-              <div class="user-info">
-
-                <div class="user-name">
-                  ${escapeHtml(name)}
+                <div class="avatar">
+                  ${avatar}
                 </div>
 
-                <div class="user-email">
-                  ${escapeHtml(user.email || "")}
+
+                <div class="user-info">
+
+                  <div class="user-name">
+                    ${escapeHtml(name)}
+                  </div>
+
                 </div>
 
               </div>
+            `;
 
-            </div>
-          `;
-
-        })
+          }
+        )
         .join("");
 
   }
@@ -1694,25 +1934,22 @@
 
 
     const filtered =
-      allUsers.filter(user => {
+      allUsers.filter(
+        user => {
 
-        const name =
-          String(
-            user.display_name || ""
-          ).toLowerCase();
-
-        const email =
-          String(
-            user.email || ""
-          ).toLowerCase();
+          const name =
+            String(
+              user.display_name || ""
+            )
+            .toLowerCase();
 
 
-        return (
-          name.includes(value) ||
-          email.includes(value)
-        );
+          return name.includes(
+            value
+          );
 
-      });
+        }
+      );
 
 
     renderUsers(
@@ -1730,13 +1967,16 @@
 
     stopMessagesRealtime();
 
+
     $("homePage")
       .classList
       .remove("hidden");
 
+
     $("profilePage")
       .classList
       .add("hidden");
+
 
     $("chatPage")
       .classList
@@ -1758,9 +1998,11 @@
       .classList
       .add("hidden");
 
+
     $("chatPage")
       .classList
       .add("hidden");
+
 
     $("profilePage")
       .classList
@@ -1776,8 +2018,12 @@
       name;
 
 
+    /*
+      ایمیل فقط از Auth خود کاربر گرفته می‌شود.
+      ایمیل سایر کاربران هرگز خوانده نمی‌شود.
+    */
+
     $("profileEmail").textContent =
-      currentProfile?.email ||
       currentUser?.email ||
       "";
 
@@ -1796,7 +2042,8 @@
 
     const user =
       allUsers.find(
-        item => item.id === userId
+        item =>
+          item.id === userId
       );
 
 
@@ -1813,9 +2060,11 @@
       .classList
       .add("hidden");
 
+
     $("profilePage")
       .classList
       .add("hidden");
+
 
     $("chatPage")
       .classList
@@ -1849,7 +2098,12 @@
     }
 
 
-    $("messages").innerHTML = "";
+    $("messages").innerHTML =
+      `
+      <div class="empty-state">
+        در حال بارگذاری...
+      </div>
+      `;
 
 
     await loadMessages();
@@ -1868,12 +2122,15 @@
 
     stopMessagesRealtime();
 
+
     selectedUser =
       null;
+
 
     $("chatPage")
       .classList
       .add("hidden");
+
 
     $("homePage")
       .classList
@@ -1888,13 +2145,17 @@
 
   async function loadMessages() {
 
-    if (!currentUser || !selectedUser) {
+    if (
+      !currentUser ||
+      !selectedUser
+    ) {
       return;
     }
 
 
     const myId =
       currentUser.id;
+
 
     const otherId =
       selectedUser.id;
@@ -1927,12 +2188,14 @@
         error
       );
 
+
       $("messages").innerHTML =
         `
         <div class="empty-state">
           خطا در دریافت پیام‌ها
         </div>
         `;
+
 
       return;
     }
@@ -1954,7 +2217,9 @@
 
     } else {
 
-      $("messages").innerHTML = "";
+      $("messages").innerHTML =
+        "";
+
 
       messages.forEach(
         addMessageToScreen
@@ -1969,10 +2234,12 @@
 
 
   /* =========================================================
-     ADD MESSAGE TO SCREEN
+     ADD MESSAGE
   ========================================================= */
 
-  function addMessageToScreen(message) {
+  function addMessageToScreen(
+    message
+  ) {
 
     if (!message) {
       return;
@@ -2014,7 +2281,9 @@
 
 
     const row =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
 
     row.className =
@@ -2031,7 +2300,9 @@
 
 
     const bubble =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
 
     bubble.className =
@@ -2039,7 +2310,9 @@
 
 
     const content =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
 
     content.textContent =
@@ -2047,7 +2320,9 @@
 
 
     const time =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
 
     time.className =
@@ -2064,13 +2339,16 @@
       content
     );
 
+
     bubble.appendChild(
       time
     );
 
+
     row.appendChild(
       bubble
     );
+
 
     messagesBox.appendChild(
       row
@@ -2097,12 +2375,15 @@
     }
 
 
-    setTimeout(() => {
+    setTimeout(
+      () => {
 
-      box.scrollTop =
-        box.scrollHeight;
+        box.scrollTop =
+          box.scrollHeight;
 
-    }, 30);
+      },
+      30
+    );
 
   }
 
@@ -2148,16 +2429,18 @@
     } =
       await supabaseClient
         .from("messages")
-        .insert({
-          sender_id:
-            currentUser.id,
+        .insert(
+          {
+            sender_id:
+              currentUser.id,
 
-          receiver_id:
-            selectedUser.id,
+            receiver_id:
+              selectedUser.id,
 
-          content:
-            content
-        })
+            content:
+              content
+          }
+        )
         .select(
           "id,sender_id,receiver_id,content,created_at"
         )
@@ -2175,9 +2458,11 @@
         error
       );
 
+
       alert(
         "ارسال پیام انجام نشد."
       );
+
 
       return;
     }
@@ -2185,6 +2470,7 @@
 
     input.value =
       "";
+
 
     input.style.height =
       "43px";
@@ -2198,10 +2484,12 @@
 
 
   /* =========================================================
-     ENTER KEY
+     ENTER
   ========================================================= */
 
-  function handleMessageKey(event) {
+  function handleMessageKey(
+    event
+  ) {
 
     if (
       event.key === "Enter" &&
@@ -2236,6 +2524,7 @@
 
     const myId =
       currentUser.id;
+
 
     const otherId =
       selectedUser.id;
@@ -2288,7 +2577,10 @@
           }
         )
         .subscribe(
-          (status, error) => {
+          (
+            status,
+            error
+          ) => {
 
             console.log(
               "REALTIME STATUS:",
@@ -2330,14 +2622,17 @@
     stopMessagesRealtime();
 
 
-    await supabaseClient.auth.signOut();
+    await supabaseClient.auth
+      .signOut();
 
 
     currentUser =
       null;
 
+
     currentProfile =
       null;
+
 
     selectedUser =
       null;
@@ -2362,54 +2657,59 @@
      AUTH STATE
   ========================================================= */
 
-  supabaseClient.auth.onAuthStateChange(
-    async (event, session) => {
+  supabaseClient.auth
+    .onAuthStateChange(
+      async (
+        event,
+        session
+      ) => {
 
-      console.log(
-        "AUTH EVENT:",
-        event
-      );
-
-
-      if (
-        session &&
-        session.user
-      ) {
-
-        currentUser =
-          session.user;
+        console.log(
+          "AUTH EVENT:",
+          event
+        );
 
 
         if (
-          event === "PASSWORD_RECOVERY"
+          session &&
+          session.user
         ) {
+
+          currentUser =
+            session.user;
+
+
+          if (
+            event ===
+            "PASSWORD_RECOVERY"
+          ) {
+
+            showAuthPage();
+
+            showResetPassword();
+
+            return;
+          }
+
+
+          if (
+            $("appPage")
+              .classList
+              .contains("hidden")
+          ) {
+
+            await loadApp();
+
+          }
+
+        } else {
 
           showAuthPage();
 
-          showResetPassword();
-
-          return;
         }
-
-
-        if (
-          $("appPage")
-            .classList
-            .contains("hidden")
-        ) {
-
-          await loadApp();
-
-        }
-
-      } else {
-
-        showAuthPage();
 
       }
-
-    }
-  );
+    );
 
 
   /* =========================================================
@@ -2425,7 +2725,9 @@
           session
         }
       } =
-        await supabaseClient.auth.getSession();
+        await supabaseClient
+          .auth
+          .getSession();
 
 
       if (
@@ -2435,6 +2737,7 @@
 
         currentUser =
           session.user;
+
 
         await loadApp();
 
@@ -2451,6 +2754,7 @@
         error
       );
 
+
       showAuthPage();
 
     } finally {
@@ -2465,7 +2769,7 @@
 
 
   /* =========================================================
-     AUTO RESIZE MESSAGE BOX
+     AUTO RESIZE
   ========================================================= */
 
   $("messageInput")
@@ -2475,6 +2779,7 @@
 
         this.style.height =
           "43px";
+
 
         this.style.height =
           Math.min(
@@ -2487,7 +2792,7 @@
 
 
   /* =========================================================
-     PWA SERVICE WORKER
+     SERVICE WORKER
   ========================================================= */
 
   if (
