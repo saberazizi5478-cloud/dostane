@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>مدیریت دوستانه</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Tahoma, Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    .header {
+      background: #2563eb;
+      color: white;
+      padding: 18px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,.12);
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .title {
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      opacity: .85;
+      margin-top: 4px;
+    }
+
+    .logout {
+      border: 0;
+      background: rgba(255,255,255,.16);
+      color: white;
+      padding: 9px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 18px 14px 40px;
+    }
+
+    .loading,
+    .error,
+    .login-box,
+    .admin-content {
+      display: none;
+    }
+
+    .loading.active,
+    .error.active,
+    .login-box.active,
+    .admin-content.active {
+      display: block;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: #64748b;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .login-box {
+      background: white;
+      border-radius: 18px;
+      padding: 28px 20px;
+      margin: 50px auto;
+      max-width: 420px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.08);
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-top: 0;
+    }
+
+    .login-box p {
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .danger {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: white;
+      border-radius: 15px;
+      padding: 17px 12px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.05);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 25px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .toolbar {
+      background: white;
+      border-radius: 15px;
+      padding: 13px;
+      margin-bottom: 14px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.05);
+      display: flex;
+      gap: 10px;
+    }
+
+    .search {
+      flex: 1;
+      border: 1px solid #dbe1ea;
+      border-radius: 10px;
+      padding: 11px 13px;
+      outline: none;
+      font-size: 14px;
+      direction: rtl;
+    }
+
+    .search:focus {
+      border-color: #2563eb;
+    }
+
+    .users {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .user-card {
+      background: white;
+      border-radius: 15px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 3px 14px rgba(0,0,0,.05);
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      background: #dbeafe;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      font-weight: bold;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-name {
+      font-weight: bold;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    .user-meta {
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .status {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 3px 8px;
+      font-size: 11px;
+      margin-left: 5px;
+    }
+
+    .status.approved {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .approval {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    .approval input {
+      width: 20px;
+      height: 20px;
+      accent-color: #2563eb;
+      cursor: pointer;
+    }
+
+    .refresh {
+      margin-bottom: 14px;
+    }
+
+    .empty {
+      background: white;
+      border-radius: 15px;
+      padding: 35px 15px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    @media (max-width: 700px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .user-card {
+        align-items: flex-start;
+      }
+
+      .approval {
+        flex-direction: column;
+        gap: 3px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <div class="title">دوستانه — مدیریت</div>
+        <div class="subtitle">پنل مدیریت کاربران</div>
+      </div>
+
+      <button class="logout" onclick="logout()">
+        خروج
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <div id="loading" class="loading active">
+      در حال بررسی دسترسی...
+    </div>
+
+    <div id="error" class="error"></div>
+
+    <div id="loginBox" class="login-box">
+      <h2>دسترسی محدود</h2>
+      <p>
+        برای ورود به پنل مدیریت باید با حساب مدیر وارد شده باشید.
+      </p>
+
+      <button class="btn primary" onclick="goToLogin()">
+        ورود به دوستانه
+      </button>
+    </div>
+
+    <section id="adminContent" class="admin-content">
+
+      <div class="stats">
+
+        <div class="stat">
+          <div id="totalUsers" class="stat-number">۰</div>
+          <div class="stat-label">کل کاربران</div>
+        </div>
+
+        <div class="stat">
+          <div id="approvedUsers" class="stat-number">۰</div>
+          <div class="stat-label">تأییدشده</div>
+        </div>
+
+        <div class="stat">
+          <div id="pendingUsers" class="stat-number">۰</div>
+          <div class="stat-label">در انتظار</div>
+        </div>
+
+        <div class="stat">
+          <div id="totalMessages" class="stat-number">۰</div>
+          <div class="stat-label">کل پیام‌ها</div>
+        </div>
+
+      </div>
+
+      <button class="btn primary refresh" onclick="loadAdminData()">
+        ↻ بروزرسانی
+      </button>
+
+      <div class="toolbar">
+        <input
+          id="searchInput"
+          class="search"
+          type="search"
+          placeholder="جستجوی نام کاربر..."
+          oninput="filterUsers()"
+        >
+      </div>
+
+      <div id="users" class="users"></div>
+
+    </section>
+
+  </main>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://uobviepglysngosuomph.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_ki1URRpDpSc-E5h5HQiq3w_2_-LHIHa";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+    const ADMIN_FUNCTION_URL =
+      SUPABASE_URL +
+      "/functions/v1/admin-panel";
+
+    let allUsers = [];
+
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function toPersianNumber(value) {
+      return String(value ?? 0)
+        .replace(/\d/g, d =>
+          "۰۱۲۳۴۵۶۷۸۹"[Number(d)]
+        );
+    }
+
+    function getInitial(name) {
+      const value = String(name || "ک").trim();
+
+      if (!value) {
+        return "ک";
+      }
+
+      return value.charAt(0);
+    }
+
+    function showError(message) {
+      $("error").textContent = message;
+      $("error").classList.add("active");
+    }
+
+    function hideError() {
+      $("error").classList.remove("active");
+      $("error").textContent = "";
+    }
+
+    async function checkAccess() {
+
+      hideError();
+
+      const {
+        data: {
+          session
+        }
+      } = await supabaseClient.auth.getSession();
+
+      if (!session) {
+
+        $("loading").classList.remove("active");
+        $("loginBox").classList.add("active");
+
+        return;
+      }
+
+      await loadAdminData();
+    }
+
+    async function callAdmin(action, extra = {}) {
+
+      const {
+        data: {
+          session
+        }
+      } = await supabaseClient.auth.getSession();
+
+      if (!session) {
+        throw new Error("جلسه ورود پیدا نشد.");
+      }
+
+      const response =
+        await fetch(
+          ADMIN_FUNCTION_URL,
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization":
+                "Bearer " + session.access_token
+            },
+
+            body: JSON.stringify({
+              action,
+              ...extra
+            })
+          }
+        );
+
+      let result = {};
+
+      try {
+        result = await response.json();
+      } catch {
+        result = {};
+      }
+
+      if (!response.ok) {
+
+        if (response.status === 401) {
+          throw new Error(
+            "نشست ورود منقضی شده است. دوباره وارد شوید."
+          );
+        }
+
+        if (response.status === 403) {
+          throw new Error(
+            "این حساب اجازه دسترسی به پنل مدیریت را ندارد."
+          );
+        }
+
+        throw new Error(
+          result.error ||
+          "خطا در ارتباط با سرور."
+        );
+      }
+
+      return result;
+    }
+
+    async function loadAdminData() {
+
+      hideError();
+
+      $("loading").classList.add("active");
+      $("adminContent").classList.remove("active");
+      $("loginBox").classList.remove("active");
+
+      try {
+
+        const result =
+          await callAdmin("list");
+
+        allUsers =
+          Array.isArray(result.users)
+            ? result.users
+            : [];
+
+        const stats =
+          result.stats || {};
+
+        $("totalUsers").textContent =
+          toPersianNumber(
+            stats.total_users || 0
+          );
+
+        $("approvedUsers").textContent =
+          toPersianNumber(
+            stats.approved_users || 0
+          );
+
+        $("pendingUsers").textContent =
+          toPersianNumber(
+            stats.pending_users || 0
+          );
+
+        $("totalMessages").textContent =
+          toPersianNumber(
+            stats.total_messages || 0
+          );
+
+        renderUsers(allUsers);
+
+        $("loading").classList.remove("active");
+        $("adminContent").classList.add("active");
+
+      } catch (error) {
+
+        console.error(error);
+
+        $("loading").classList.remove("active");
+
+        const message =
+          error?.message ||
+          "خطایی رخ داد.";
+
+        if (
+          message.includes("دوباره وارد") ||
+          message.includes("اجازه دسترسی")
+        ) {
+          showError(message);
+          $("loginBox").classList.add("active");
+        } else {
+          showError(message);
+          $("adminContent").classList.add("active");
+        }
+      }
+    }
+
+    function renderUsers(users) {
+
+      const container =
+        $("users");
+
+      if (!users.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            کاربری پیدا نشد.
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML =
+        users.map(user => {
+
+          const name =
+            user.display_name ||
+            "کاربر";
+
+          const avatar =
+            user.avatar_url
+              ? `
+                <img
+                  src="${escapeHtml(user.avatar_url)}"
+                  alt=""
+                >
+              `
+              : escapeHtml(
+                  getInitial(name)
+                );
+
+          const approved =
+            Boolean(user.approved);
+
+          const status =
+            approved
+              ? `
+                <span class="status approved">
+                  تأییدشده
+                </span>
+              `
+              : `
+                <span class="status pending">
+                  در انتظار
+                </span>
+              `;
+
+          const created =
+            user.created_at
+              ? new Date(
+                  user.created_at
+                ).toLocaleDateString(
+                  "fa-IR"
+                )
+              : "";
+
+          return `
+            <div class="user-card">
+
+              <div class="avatar">
+                ${avatar}
+              </div>
+
+              <div class="user-info">
+
+                <div class="user-name">
+                  ${escapeHtml(name)}
+                  ${status}
+                </div>
+
+                <div class="user-meta">
+                  ${toPersianNumber(
+                    user.message_count || 0
+                  )} پیام
+                  ${created
+                    ? " • ثبت‌نام " +
+                      escapeHtml(created)
+                    : ""}
+                </div>
+
+              </div>
+
+              <label class="approval">
+
+                <input
+                  type="checkbox"
+                  ${approved ? "checked" : ""}
+                  onchange="changeApproval(
+                    '${escapeHtml(user.id)}',
+                    this
+                  )"
+                >
+
+                <span>
+                  اجازه ورود
+                </span>
+
+              </label>
+
+            </div>
+          `;
+
+        }).join("");
+    }
+
+    function filterUsers() {
+
+      const value =
+        $("searchInput")
+          .value
+          .trim()
+          .toLowerCase();
+
+      if (!value) {
+        renderUsers(allUsers);
+        return;
+      }
+
+      const filtered =
+        allUsers.filter(user => {
+
+          const name =
+            String(
+              user.display_name || ""
+            ).toLowerCase();
+
+          return name.includes(value);
+        });
+
+      renderUsers(filtered);
+    }
+
+    async function changeApproval(
+      userId,
+      checkbox
+    ) {
+
+      const newValue =
+        checkbox.checked;
+
+      checkbox.disabled = true;
+
+      try {
+
+        await callAdmin(
+          "set_approval",
+          {
+            target_user_id: userId,
+            approved: newValue
+          }
+        );
+
+        const user =
+          allUsers.find(
+            u => u.id === userId
+          );
+
+        if (user) {
+          user.approved = newValue;
+        }
+
+        updateStatsLocally();
+
+        filterUsers();
+
+      } catch (error) {
+
+        console.error(error);
+
+        checkbox.checked =
+          !newValue;
+
+        alert(
+          error?.message ||
+          "تغییر وضعیت انجام نشد."
+        );
+      }
+
+      checkbox.disabled = false;
+    }
+
+    function updateStatsLocally() {
+
+      const approved =
+        allUsers.filter(
+          user => Boolean(user.approved)
+        ).length;
+
+      $("totalUsers").textContent =
+        toPersianNumber(
+          allUsers.length
+        );
+
+      $("approvedUsers").textContent =
+        toPersianNumber(
+          approved
+        );
+
+      $("pendingUsers").textContent =
+        toPersianNumber(
+          allUsers.length - approved
+        );
+    }
+
+    async function logout() {
+
+      await supabaseClient.auth.signOut();
+
+      location.reload();
+    }
+
+    function goToLogin() {
+
+      window.location.href =
+        "./index.html";
+    }
+
+    supabaseClient.auth.onAuthStateChange(
+      async (event) => {
+
+        if (
+          event === "SIGNED_OUT"
+        ) {
+          $("adminContent")
+            .classList
+            .remove("active");
+
+          $("loginBox")
+            .classList
+            .add("active");
+        }
+      }
+    );
+
+    checkAccess();
+
+  </script>
+
+</body>
+</html>
