@@ -2,39 +2,31 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1,viewport-fit=cover"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#2563eb">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="اپ پیام‌رسان دوستانه">
 
   <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png">
 
   <title>دوستانه</title>
 
   <style>
-
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
 
-    html,
     body {
       margin: 0;
-      padding: 0;
-      min-height: 100%;
       font-family: Tahoma, Arial, sans-serif;
       background: #f5f7fb;
-      color: #172033;
+      color: #111827;
     }
 
     button,
-    input {
+    input,
+    textarea {
       font-family: inherit;
     }
 
@@ -50,43 +42,31 @@
       min-height: 100vh;
     }
 
-    /* =========================
-       AUTH
-    ========================= */
+    /* AUTH */
 
     #authScreen {
-      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: linear-gradient(
-        135deg,
-        #2563eb,
-        #4f46e5
-      );
+      background: linear-gradient(135deg, #eff6ff, #f8fafc);
     }
 
     .auth-box {
       width: 100%;
-      max-width: 430px;
-      background: #fff;
+      max-width: 420px;
+      background: white;
       border-radius: 24px;
       padding: 28px 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.18);
+      box-shadow: 0 15px 50px rgba(0,0,0,.08);
     }
 
     .logo {
-      width: 72px;
-      height: 72px;
+      width: 76px;
+      height: 76px;
+      display: block;
       margin: 0 auto 15px;
       border-radius: 20px;
-      background: #2563eb;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
     }
 
     .auth-title {
@@ -97,33 +77,60 @@
 
     .auth-subtitle {
       text-align: center;
+      color: #6b7280;
+      margin: 0 0 25px;
+      font-size: 14px;
+    }
+
+    .tabs {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 13px;
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      padding: 11px;
+      border-radius: 10px;
+      font-size: 15px;
       color: #64748b;
-      margin-bottom: 25px;
+    }
+
+    .tab.active {
+      background: white;
+      color: #2563eb;
+      box-shadow: 0 2px 8px rgba(0,0,0,.07);
+      font-weight: bold;
     }
 
     .field {
-      margin-bottom: 13px;
+      margin-bottom: 14px;
     }
 
     .field label {
       display: block;
-      margin-bottom: 6px;
-      color: #475569;
-      font-size: 14px;
+      font-size: 13px;
+      margin-bottom: 7px;
+      color: #374151;
     }
 
     .field input {
       width: 100%;
-      border: 1px solid #dbe2ea;
-      border-radius: 13px;
+      border: 1px solid #dbe1ea;
+      border-radius: 12px;
       padding: 13px 14px;
-      font-size: 16px;
+      font-size: 15px;
       outline: none;
       background: #fff;
     }
 
     .field input:focus {
       border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37,99,235,.1);
     }
 
     .primary-btn {
@@ -132,174 +139,161 @@
       border-radius: 13px;
       padding: 14px;
       background: #2563eb;
-      color: #fff;
+      color: white;
       font-size: 16px;
       font-weight: bold;
+      margin-top: 5px;
     }
 
     .primary-btn:disabled {
-      opacity: .6;
-      cursor: wait;
+      opacity: .65;
+      cursor: not-allowed;
     }
 
-    .secondary-btn {
-      width: 100%;
-      border: 0;
-      border-radius: 13px;
-      padding: 13px;
-      background: #eef2ff;
-      color: #3730a3;
-      font-size: 15px;
-      margin-top: 10px;
-    }
-
-    .auth-message {
+    .message {
       margin-top: 15px;
-      padding: 11px;
+      padding: 12px;
       border-radius: 11px;
-      background: #f1f5f9;
-      color: #334155;
+      font-size: 13px;
       line-height: 1.8;
-      font-size: 14px;
+      display: none;
     }
 
-    .auth-message.error {
-      background: #fee2e2;
-      color: #991b1b;
+    .message.show {
+      display: block;
     }
 
-    .auth-message.success {
-      background: #dcfce7;
-      color: #166534;
+    .message.error {
+      background: #fef2f2;
+      color: #b91c1c;
     }
 
-    /* =========================
-       APP HEADER
-    ========================= */
+    .message.success {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .message.info {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    /* APP */
 
     #appScreen {
-      background: #f5f7fb;
+      display: none;
+      min-height: 100vh;
     }
 
-    .app-header {
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
       height: 64px;
-      background: #fff;
+      background: white;
       border-bottom: 1px solid #e5e7eb;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 14px;
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      padding: 0 15px;
     }
 
-    .header-title {
+    .topbar-title {
       font-size: 20px;
       font-weight: bold;
+      color: #2563eb;
     }
 
-    .header-actions {
+    .topbar-actions {
       display: flex;
       gap: 7px;
     }
 
     .icon-btn {
-      width: 42px;
-      height: 42px;
       border: 0;
-      border-radius: 12px;
       background: #f1f5f9;
-      font-size: 19px;
-    }
-
-    .icon-btn:active {
-      transform: scale(.95);
+      border-radius: 10px;
+      padding: 9px 11px;
+      font-size: 14px;
     }
 
     .app-content {
-      max-width: 800px;
+      max-width: 1000px;
       margin: auto;
-      padding: 16px;
+      padding: 15px;
     }
 
-    /* =========================
-       WELCOME
-    ========================= */
-
     .welcome-card {
-      background: linear-gradient(
-        135deg,
-        #2563eb,
-        #4f46e5
-      );
-      color: #fff;
-      border-radius: 20px;
-      padding: 22px;
+      background: white;
+      border-radius: 18px;
+      padding: 18px;
       margin-bottom: 15px;
+      border: 1px solid #e5e7eb;
     }
 
     .welcome-card h2 {
-      margin: 0 0 7px;
+      margin: 0 0 5px;
+      font-size: 20px;
     }
 
     .welcome-card p {
       margin: 0;
-      opacity: .9;
+      color: #6b7280;
+      font-size: 13px;
     }
 
-    /* =========================
-       SEARCH
-    ========================= */
-
-    .search-box {
-      margin-bottom: 15px;
+    .layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 15px;
     }
 
-    .search-box input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #dbe2ea;
-      border-radius: 14px;
-      font-size: 15px;
-      outline: none;
+    .panel {
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      overflow: hidden;
     }
 
-    /* =========================
-       USERS
-    ========================= */
+    .panel-header {
+      padding: 15px;
+      border-bottom: 1px solid #e5e7eb;
+      font-weight: bold;
+    }
 
     .users-list {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
+      max-height: 520px;
+      overflow-y: auto;
     }
 
-    .user-card {
-      background: #fff;
-      border-radius: 17px;
-      padding: 13px;
+    .user-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      border: 1px solid #edf0f4;
+      gap: 11px;
+      padding: 13px;
+      border-bottom: 1px solid #f1f5f9;
+      cursor: pointer;
     }
 
-    .user-card:active {
-      transform: scale(.99);
+    .user-item:hover {
+      background: #f8fafc;
+    }
+
+    .user-item.active {
+      background: #eff6ff;
     }
 
     .avatar {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: #dbeafe;
-      color: #1d4ed8;
+      color: #2563eb;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
       font-weight: bold;
+      flex-shrink: 0;
       overflow: hidden;
     }
 
@@ -311,272 +305,217 @@
 
     .user-info {
       min-width: 0;
-      flex: 1;
     }
 
     .user-name {
       font-weight: bold;
-      margin-bottom: 4px;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .user-status {
-      font-size: 12px;
+      font-size: 11px;
       color: #64748b;
+      margin-top: 3px;
     }
 
-    /* =========================
-       PAGE CARD
-    ========================= */
+    /* CHAT */
 
-    .page-card {
-      background: #fff;
-      border-radius: 20px;
-      padding: 20px;
-    }
-
-    .page-card h2 {
-      margin-top: 0;
-    }
-
-    /* =========================
-       PROFILE
-    ========================= */
-
-    #profilePage {
-      min-height: 100vh;
-      background: #f5f7fb;
-    }
-
-    .profile-avatar {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      margin: 10px auto 20px;
-      background: #dbeafe;
-      color: #1d4ed8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      overflow: hidden;
-    }
-
-    .profile-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .back-btn {
-      width: 100%;
-      border: 0;
-      padding: 13px;
-      border-radius: 13px;
-      background: #f1f5f9;
-      margin-top: 10px;
-      font-size: 15px;
-    }
-
-    /* =========================
-       CHAT
-    ========================= */
-
-    #chatPage {
-      position: fixed;
-      inset: 0;
-      background: #f5f7fb;
-      z-index: 100;
+    .chat-panel {
       display: flex;
       flex-direction: column;
+      min-height: 520px;
     }
 
     .chat-header {
-      height: 64px;
-      background: #fff;
+      padding: 13px 15px;
       border-bottom: 1px solid #e5e7eb;
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 0 10px;
     }
 
-    .chat-title {
+    .chat-name {
       font-weight: bold;
     }
 
-    .messages {
+    .chat-messages {
       flex: 1;
-      overflow-y: auto;
       padding: 15px;
+      overflow-y: auto;
+      min-height: 380px;
+      max-height: 480px;
+      background: #f8fafc;
     }
 
-    .message-row {
+    .empty-chat {
+      height: 100%;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .msg-row {
       display: flex;
       margin-bottom: 9px;
     }
 
-    .message-row.mine {
+    .msg-row.mine {
       justify-content: flex-start;
     }
 
-    .message-row.theirs {
+    .msg-row.theirs {
       justify-content: flex-end;
     }
 
-    .message-bubble {
-      max-width: 78%;
-      padding: 10px 13px;
-      border-radius: 16px;
+    .bubble {
+      max-width: 75%;
+      padding: 9px 12px;
+      border-radius: 15px;
+      font-size: 14px;
       line-height: 1.7;
       word-break: break-word;
     }
 
-    .mine .message-bubble {
+    .mine .bubble {
       background: #2563eb;
-      color: #fff;
+      color: white;
       border-bottom-left-radius: 4px;
     }
 
-    .theirs .message-bubble {
-      background: #fff;
+    .theirs .bubble {
+      background: white;
       border: 1px solid #e5e7eb;
       border-bottom-right-radius: 4px;
     }
 
-    .chat-input-area {
-      background: #fff;
-      border-top: 1px solid #e5e7eb;
-      padding: 10px;
-      display: flex;
-      gap: 8px;
+    .msg-time {
+      display: block;
+      font-size: 9px;
+      opacity: .65;
+      margin-top: 3px;
     }
 
     .chat-input {
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      border-top: 1px solid #e5e7eb;
+      background: white;
+    }
+
+    .chat-input textarea {
       flex: 1;
-      border: 1px solid #dbe2ea;
-      border-radius: 14px;
-      padding: 12px;
-      font-size: 15px;
+      resize: none;
+      border: 1px solid #dbe1ea;
+      border-radius: 12px;
+      padding: 10px;
+      min-height: 43px;
+      max-height: 110px;
       outline: none;
+      font-size: 14px;
     }
 
     .send-btn {
       width: 48px;
       border: 0;
-      border-radius: 14px;
+      border-radius: 12px;
       background: #2563eb;
-      color: #fff;
-      font-size: 20px;
-    }
-
-    /* =========================
-       ADMIN
-    ========================= */
-
-    #adminPage {
-      position: fixed;
-      inset: 0;
-      z-index: 90;
-      background: #f5f7fb;
-      overflow-y: auto;
-    }
-
-    .admin-header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: #fff;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 11px 15px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .admin-header h2 {
-      margin: 0;
+      color: white;
       font-size: 19px;
     }
 
-    .admin-content {
-      max-width: 850px;
-      margin: auto;
-      padding: 15px;
+    /* ADMIN */
+
+    #adminPanel {
+      margin-top: 15px;
     }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 10px;
-      margin-bottom: 15px;
+      padding: 15px;
+      background: #111827;
+      color: white;
     }
 
-    .stat-card {
-      background: #fff;
-      border-radius: 17px;
-      padding: 17px;
-      border: 1px solid #edf0f4;
+    .admin-title {
+      font-weight: bold;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 12px;
+    }
+
+    .stat {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
     }
 
     .stat-number {
-      font-size: 25px;
+      font-size: 21px;
       font-weight: bold;
-      margin-bottom: 4px;
+      color: #2563eb;
     }
 
     .stat-label {
+      font-size: 11px;
       color: #64748b;
-      font-size: 13px;
+      margin-top: 3px;
     }
 
-    .admin-toolbar {
-      background: #fff;
-      border-radius: 17px;
-      padding: 12px;
-      margin-bottom: 12px;
-    }
-
-    .admin-toolbar button {
-      width: 100%;
-      border: 0;
-      border-radius: 11px;
-      padding: 11px;
-      background: #eef2ff;
-      color: #3730a3;
-      font-size: 14px;
+    .admin-users {
+      padding: 0 12px 12px;
     }
 
     .admin-user {
-      background: #fff;
-      border-radius: 17px;
-      padding: 13px;
-      margin-bottom: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .admin-user-main {
       display: flex;
       align-items: center;
       gap: 10px;
-      border: 1px solid #edf0f4;
+      min-width: 0;
     }
 
-    .admin-user-info {
-      flex: 1;
+    .admin-user-text {
       min-width: 0;
     }
 
     .admin-user-name {
       font-weight: bold;
-      margin-bottom: 5px;
+      font-size: 14px;
     }
 
-    .admin-user-date {
-      font-size: 11px;
-      color: #94a3b8;
-      margin-top: 2px;
+    .admin-user-meta {
+      font-size: 10px;
+      color: #64748b;
+      margin-top: 3px;
     }
 
     .approval-btn {
       border: 0;
-      border-radius: 11px;
-      padding: 9px 11px;
+      border-radius: 10px;
+      padding: 8px 12px;
       font-size: 12px;
       white-space: nowrap;
     }
@@ -591,940 +530,936 @@
       color: #991b1b;
     }
 
-    .admin-badge {
-      display: inline-block;
-      margin-top: 5px;
-      padding: 4px 8px;
-      border-radius: 7px;
-      background: #ede9fe;
-      color: #6d28d9;
-      font-size: 11px;
-    }
-
-    /* =========================
-       GENERAL
-    ========================= */
-
-    .loading {
+    .admin-loading {
+      padding: 20px;
       text-align: center;
       color: #64748b;
-      padding: 25px;
     }
 
-    .error-box {
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 13px;
-      border-radius: 13px;
-      line-height: 1.8;
-    }
+    /* MOBILE */
 
-    @media (min-width: 600px) {
-
-      .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
+    @media (max-width: 720px) {
+      .layout {
+        grid-template-columns: 1fr;
       }
 
-    }
+      .users-list {
+        max-height: 240px;
+      }
 
+      .chat-panel {
+        min-height: 500px;
+      }
+
+      .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .admin-user {
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 
-
 <body>
 
+  <!-- AUTH SCREEN -->
+  <section id="authScreen" class="screen">
 
-<!-- =====================================================
-     AUTH SCREEN
-===================================================== -->
+    <div class="auth-box">
 
-<section id="authScreen" class="screen">
+      <img class="logo" src="./icon-192.png" alt="دوستانه">
 
-  <div class="auth-box">
+      <h1 class="auth-title">دوستانه</h1>
+      <p class="auth-subtitle">پیام‌رسان دوستانه</p>
 
-    <div class="logo">
-      💬
-    </div>
+      <div class="tabs">
+        <button id="loginTab" class="tab active" type="button">
+          ورود
+        </button>
 
-    <h1 class="auth-title">
-      دوستانه
-    </h1>
-
-    <div class="auth-subtitle">
-      پیام‌رسان ساده و خصوصی
-    </div>
-
-
-    <div id="nameField" class="field">
-
-      <label>
-        نام نمایشی
-      </label>
-
-      <input
-        id="nameInput"
-        type="text"
-        placeholder="مثلاً صابر"
-        autocomplete="name"
-      >
-
-    </div>
-
-
-    <div class="field">
-
-      <label>
-        ایمیل
-      </label>
-
-      <input
-        id="emailInput"
-        type="email"
-        placeholder="example@gmail.com"
-        autocomplete="email"
-      >
-
-    </div>
-
-
-    <div class="field">
-
-      <label>
-        رمز عبور
-      </label>
-
-      <input
-        id="passwordInput"
-        type="password"
-        placeholder="حداقل ۶ کاراکتر"
-        autocomplete="current-password"
-      >
-
-    </div>
-
-
-    <button
-      id="authButton"
-      class="primary-btn"
-    >
-      ثبت‌نام
-    </button>
-
-
-    <button
-      id="switchAuthButton"
-      class="secondary-btn"
-    >
-      قبلاً حساب داری؟ ورود
-    </button>
-
-
-    <div
-      id="authMessage"
-      class="auth-message hidden"
-    ></div>
-
-  </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     MAIN APP
-===================================================== -->
-
-<section
-  id="appScreen"
-  class="screen hidden"
->
-
-  <header class="app-header">
-
-    <div class="header-title">
-      دوستانه
-    </div>
-
-
-    <div class="header-actions">
-
-      <button
-        id="adminBtn"
-        class="icon-btn hidden"
-        title="مدیریت"
-      >
-        🛡️
-      </button>
-
-
-      <button
-        id="profileBtn"
-        class="icon-btn"
-        title="پروفایل"
-      >
-        👤
-      </button>
-
-
-      <button
-        id="logoutBtn"
-        class="icon-btn"
-        title="خروج"
-      >
-        🚪
-      </button>
-
-    </div>
-
-  </header>
-
-
-  <main class="app-content">
-
-
-    <div class="welcome-card">
-
-      <h2 id="welcomeText">
-        سلام 👋
-      </h2>
-
-      <p>
-        دوستانت رو پیدا کن و باهاشون گفتگو کن.
-      </p>
-
-    </div>
-
-
-    <div class="search-box">
-
-      <input
-        id="searchInput"
-        type="search"
-        placeholder="جستجوی کاربر..."
-      >
-
-    </div>
-
-
-    <div
-      id="usersList"
-      class="users-list"
-    >
-
-      <div class="loading">
-        در حال بارگذاری...
+        <button id="signupTab" class="tab" type="button">
+          ثبت‌نام
+        </button>
       </div>
 
+      <!-- LOGIN -->
+      <form id="loginForm">
+
+        <div class="field">
+          <label for="loginEmail">ایمیل</label>
+          <input
+            id="loginEmail"
+            type="email"
+            autocomplete="email"
+            placeholder="ایمیل خود را وارد کنید"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">رمز عبور</label>
+          <input
+            id="loginPassword"
+            type="password"
+            autocomplete="current-password"
+            placeholder="رمز عبور"
+            required
+          >
+        </div>
+
+        <button id="loginBtn" class="primary-btn" type="submit">
+          ورود
+        </button>
+
+      </form>
+
+      <!-- SIGNUP -->
+      <form id="signupForm" class="hidden">
+
+        <div class="field">
+          <label for="signupName">نام نمایشی</label>
+          <input
+            id="signupName"
+            type="text"
+            autocomplete="name"
+            placeholder="مثلاً صابر"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="signupEmail">ایمیل</label>
+          <input
+            id="signupEmail"
+            type="email"
+            autocomplete="email"
+            placeholder="ایمیل"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="signupPassword">رمز عبور</label>
+          <input
+            id="signupPassword"
+            type="password"
+            autocomplete="new-password"
+            placeholder="حداقل ۶ کاراکتر"
+            minlength="6"
+            required
+          >
+        </div>
+
+        <button id="signupBtn" class="primary-btn" type="submit">
+          ثبت‌نام
+        </button>
+
+      </form>
+
+      <div id="authMessage" class="message"></div>
+
     </div>
-
-  </main>
-
-</section>
+  </section>
 
 
+  <!-- APP SCREEN -->
+  <section id="appScreen">
 
-<!-- =====================================================
-     PROFILE
-===================================================== -->
+    <header class="topbar">
 
-<section
-  id="profilePage"
-  class="screen hidden"
->
-
-  <div class="app-content">
-
-    <div class="page-card">
-
-      <h2>
-        پروفایل من
-      </h2>
-
-
-      <div
-        id="profileAvatar"
-        class="profile-avatar"
-      >
-        👤
+      <div class="topbar-title">
+        دوستانه
       </div>
 
+      <div class="topbar-actions">
 
-      <div class="field">
-
-        <label>
-          نام نمایشی
-        </label>
-
-        <input
-          id="profileNameInput"
-          type="text"
+        <button
+          id="refreshBtn"
+          class="icon-btn"
+          type="button"
         >
+          🔄
+        </button>
+
+        <button
+          id="logoutBtn"
+          class="icon-btn"
+          type="button"
+        >
+          خروج
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main class="app-content">
+
+      <div class="welcome-card">
+
+        <h2>
+          سلام <span id="currentUserName">کاربر</span> 👋
+        </h2>
+
+        <p>
+          به دوستانه خوش آمدی
+        </p>
 
       </div>
 
 
-      <button
-        id="saveProfileBtn"
-        class="primary-btn"
-      >
-        ذخیره تغییرات
-      </button>
+      <div class="layout">
 
+        <!-- USERS -->
+        <div class="panel">
 
-      <button
-        id="backProfileBtn"
-        class="back-btn"
-      >
-        بازگشت
-      </button>
+          <div class="panel-header">
+            کاربران
+          </div>
 
-    </div>
+          <div id="usersList" class="users-list">
+            <div class="admin-loading">
+              در حال دریافت کاربران...
+            </div>
+          </div>
 
-  </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     CHAT
-===================================================== -->
-
-<section
-  id="chatPage"
-  class="hidden"
->
-
-  <header class="chat-header">
-
-
-    <button
-      id="backChatBtn"
-      class="icon-btn"
-    >
-      ➜
-    </button>
-
-
-    <div
-      id="chatAvatar"
-      class="avatar"
-    >
-      👤
-    </div>
-
-
-    <div
-      id="chatTitle"
-      class="chat-title"
-    >
-      گفتگو
-    </div>
-
-  </header>
-
-
-  <div
-    id="messagesList"
-    class="messages"
-  ></div>
-
-
-  <div class="chat-input-area">
-
-    <input
-      id="messageInput"
-      class="chat-input"
-      type="text"
-      placeholder="پیامت رو بنویس..."
-      autocomplete="off"
-    >
-
-
-    <button
-      id="sendMessageBtn"
-      class="send-btn"
-    >
-      ➤
-    </button>
-
-  </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     ADMIN PANEL
-===================================================== -->
-
-<section
-  id="adminPage"
-  class="hidden"
->
-
-  <header class="admin-header">
-
-    <h2>
-      🛡️ پنل مدیریت
-    </h2>
-
-
-    <button
-      id="closeAdminBtn"
-      class="icon-btn"
-    >
-      ✕
-    </button>
-
-  </header>
-
-
-  <main class="admin-content">
-
-
-    <div
-      id="adminStats"
-      class="stats-grid"
-    >
-
-      <div class="stat-card">
-
-        <div class="stat-number">
-          -
         </div>
 
-        <div class="stat-label">
-          کاربران
+
+        <!-- CHAT -->
+        <div class="panel chat-panel">
+
+          <div class="chat-header">
+
+            <div id="chatAvatar" class="avatar">
+              👤
+            </div>
+
+            <div id="chatName" class="chat-name">
+              یک کاربر را انتخاب کن
+            </div>
+
+          </div>
+
+          <div id="chatMessages" class="chat-messages">
+
+            <div class="empty-chat">
+              برای شروع گفتگو یک کاربر را انتخاب کن
+            </div>
+
+          </div>
+
+          <div class="chat-input">
+
+            <textarea
+              id="messageInput"
+              placeholder="پیامت را بنویس..."
+              disabled
+            ></textarea>
+
+            <button
+              id="sendBtn"
+              class="send-btn"
+              type="button"
+              disabled
+            >
+              ➤
+            </button>
+
+          </div>
+
         </div>
 
       </div>
 
-    </div>
+
+      <!-- ADMIN -->
+      <section id="adminPanel" class="panel hidden">
+
+        <div class="admin-header">
+
+          <div class="admin-title">
+            🛡 پنل مدیریت
+          </div>
+
+          <button
+            id="adminRefreshBtn"
+            class="icon-btn"
+            type="button"
+          >
+            بروزرسانی
+          </button>
+
+        </div>
+
+        <div id="adminStats" class="admin-stats"></div>
+
+        <div id="adminUsers" class="admin-users">
+          <div class="admin-loading">
+            در حال دریافت اطلاعات...
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </section>
 
 
-    <div class="admin-toolbar">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-      <button id="refreshAdminBtn">
-        🔄 بروزرسانی اطلاعات
-      </button>
+  <script>
 
-    </div>
+    /* =========================================================
+       SUPABASE
+    ========================================================= */
 
+    const SUPABASE_URL =
+      "https://uobviepglysngosuomph.supabase.co";
 
-    <div id="adminUsersList">
+    const SUPABASE_KEY =
+      "sb_publishable_ki1URRpDpSc-E5h5HQiq3w_2_-LHIHa";
 
-      <div class="loading">
-        در حال بارگذاری کاربران...
-      </div>
-
-    </div>
-
-  </main>
-
-</section>
-
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    /* =========================================================
+       STATE
+    ========================================================= */
+
+    let currentUser = null;
+    let currentProfile = null;
+
+    let selectedUser = null;
+
+    let messageChannel = null;
+    let approvalTimer = null;
+
+    let isLoadingApp = false;
+    let isLoggingIn = false;
 
 
-<script>
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
 
-  /* =====================================================
-     SUPABASE
-  ===================================================== */
+    const authScreen =
+      document.getElementById("authScreen");
 
-  const SUPABASE_URL =
-    "https://uobviepglysngosuomph.supabase.co";
+    const appScreen =
+      document.getElementById("appScreen");
 
+    const loginTab =
+      document.getElementById("loginTab");
 
-  const SUPABASE_KEY =
-    "sb_publishable_ki1URRpDpSc-E5h5HQiq3w_2_-LHIHa";
+    const signupTab =
+      document.getElementById("signupTab");
 
+    const loginForm =
+      document.getElementById("loginForm");
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+    const signupForm =
+      document.getElementById("signupForm");
 
+    const loginBtn =
+      document.getElementById("loginBtn");
 
+    const signupBtn =
+      document.getElementById("signupBtn");
 
-  /* =====================================================
-     STATE
-  ===================================================== */
+    const authMessage =
+      document.getElementById("authMessage");
 
-  let currentUser = null;
+    const currentUserName =
+      document.getElementById("currentUserName");
 
-  let currentProfile = null;
+    const usersList =
+      document.getElementById("usersList");
 
-  let currentChatUser = null;
+    const chatMessages =
+      document.getElementById("chatMessages");
 
-  let allUsers = [];
+    const chatName =
+      document.getElementById("chatName");
 
-  let messageChannel = null;
+    const chatAvatar =
+      document.getElementById("chatAvatar");
 
-  let authMode = "signup";
+    const messageInput =
+      document.getElementById("messageInput");
 
-  let isAdmin = false;
+    const sendBtn =
+      document.getElementById("sendBtn");
 
-  let isLoadingApp = false;
+    const logoutBtn =
+      document.getElementById("logoutBtn");
 
-  let approvalTimer = null;
+    const refreshBtn =
+      document.getElementById("refreshBtn");
 
+    const adminPanel =
+      document.getElementById("adminPanel");
 
+    const adminStats =
+      document.getElementById("adminStats");
 
-  /* =====================================================
-     HELPERS
-  ===================================================== */
+    const adminUsers =
+      document.getElementById("adminUsers");
 
-  const $ = id =>
-    document.getElementById(id);
-
-
-  function escapeHtml(value) {
-
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-
-  }
-
-
-  function getInitial(name) {
-
-    const value =
-      String(name || "کاربر").trim();
-
-    return value
-      ? value.charAt(0)
-      : "👤";
-
-  }
+    const adminRefreshBtn =
+      document.getElementById("adminRefreshBtn");
 
 
-  function formatDate(date) {
+    /* =========================================================
+       HELPERS
+    ========================================================= */
 
-    try {
+    function escapeHtml(value) {
 
-      return new Date(date)
-        .toLocaleDateString(
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+
+    function showAuthMessage(
+      text,
+      type = "info"
+    ) {
+
+      authMessage.textContent = text;
+
+      authMessage.className =
+        "message show " + type;
+    }
+
+
+    function clearAuthMessage() {
+
+      authMessage.textContent = "";
+
+      authMessage.className =
+        "message";
+    }
+
+
+    function setLoginLoading(loading) {
+
+      loginBtn.disabled = loading;
+
+      loginBtn.textContent =
+        loading ? "در حال ورود..." : "ورود";
+    }
+
+
+    function setSignupLoading(loading) {
+
+      signupBtn.disabled = loading;
+
+      signupBtn.textContent =
+        loading ? "در حال ثبت‌نام..." : "ثبت‌نام";
+    }
+
+
+    function getAvatarHtml(user) {
+
+      if (user?.avatar_url) {
+
+        return `
+          <img
+            src="${escapeHtml(user.avatar_url)}"
+            alt=""
+          >
+        `;
+      }
+
+      const name =
+        user?.display_name || "کاربر";
+
+      return escapeHtml(
+        name.trim().charAt(0) || "👤"
+      );
+    }
+
+
+    function formatDate(date) {
+
+      try {
+
+        return new Date(date).toLocaleString(
           "fa-IR",
           {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
+            dateStyle: "short",
+            timeStyle: "short"
           }
         );
 
-    } catch {
+      } catch {
 
-      return "";
-
+        return "";
+      }
     }
 
-  }
 
+    /* =========================================================
+       AUTH TABS
+    ========================================================= */
 
-  function showAuthMessage(
-    message,
-    type = ""
-  ) {
-
-    const box =
-      $("authMessage");
-
-    box.textContent = message;
-
-    box.classList.remove(
-      "hidden",
-      "error",
-      "success"
-    );
-
-    if (type) {
-      box.classList.add(type);
-    }
-
-  }
-
-
-  function hideAuthMessage() {
-
-    $("authMessage")
-      .classList.add("hidden");
-
-  }
-
-
-
-  /* =====================================================
-     SCREEN CONTROL
-  ===================================================== */
-
-  function showAuth() {
-
-    $("authScreen")
-      .classList.remove("hidden");
-
-    $("appScreen")
-      .classList.add("hidden");
-
-    $("profilePage")
-      .classList.add("hidden");
-
-    $("adminPage")
-      .classList.add("hidden");
-
-    $("chatPage")
-      .classList.add("hidden");
-
-  }
-
-
-  function showApp() {
-
-    $("authScreen")
-      .classList.add("hidden");
-
-    $("appScreen")
-      .classList.remove("hidden");
-
-    $("profilePage")
-      .classList.add("hidden");
-
-    $("adminPage")
-      .classList.add("hidden");
-
-    $("chatPage")
-      .classList.add("hidden");
-
-  }
-
-
-
-  /* =====================================================
-     AUTH MODE
-  ===================================================== */
-
-  function setAuthMode(mode) {
-
-    authMode = mode;
-
-    hideAuthMessage();
-
-
-    if (mode === "signup") {
-
-      $("nameField")
-        .classList.remove("hidden");
-
-      $("authButton")
-        .textContent = "ثبت‌نام";
-
-      $("switchAuthButton")
-        .textContent =
-        "قبلاً حساب داری؟ ورود";
-
-      $("passwordInput")
-        .setAttribute(
-          "autocomplete",
-          "new-password"
-        );
-
-    } else {
-
-      $("nameField")
-        .classList.add("hidden");
-
-      $("authButton")
-        .textContent = "ورود";
-
-      $("switchAuthButton")
-        .textContent =
-        "حساب نداری؟ ثبت‌نام";
-
-      $("passwordInput")
-        .setAttribute(
-          "autocomplete",
-          "current-password"
-        );
-
-    }
-
-  }
-
-
-  $("switchAuthButton")
-    .addEventListener(
+    loginTab.addEventListener(
       "click",
       () => {
 
-        setAuthMode(
-          authMode === "signup"
-            ? "login"
-            : "signup"
-        );
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
 
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+
+        clearAuthMessage();
       }
     );
 
 
-
-  /* =====================================================
-     LOGIN / SIGNUP
-  ===================================================== */
-
-  $("authButton")
-    .addEventListener(
+    signupTab.addEventListener(
       "click",
-      async () => {
+      () => {
 
-        if (
-          $("authButton").disabled
-        ) {
-          return;
-        }
+        signupTab.classList.add("active");
+        loginTab.classList.remove("active");
+
+        signupForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+
+        clearAuthMessage();
+      }
+    );
 
 
-        hideAuthMessage();
+    /* =========================================================
+       LOGIN
+    ========================================================= */
 
+    loginForm.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+        if (isLoggingIn) return;
+
+        isLoggingIn = true;
+
+        setLoginLoading(true);
+        clearAuthMessage();
 
         const email =
-          $("emailInput")
+          document
+            .getElementById("loginEmail")
             .value
             .trim();
 
-
         const password =
-          $("passwordInput")
+          document
+            .getElementById("loginPassword")
             .value;
 
 
-        const name =
-          $("nameInput")
-            .value
-            .trim();
-
-
-        if (!email || !password) {
-
-          showAuthMessage(
-            "ایمیل و رمز عبور را وارد کن.",
-            "error"
-          );
-
-          return;
-
-        }
-
-
-        $("authButton")
-          .disabled = true;
-
-
         try {
-
-
-          /* =========================================
-             SIGN UP
-          ========================================= */
-
-          if (authMode === "signup") {
-
-
-            if (!name) {
-
-              showAuthMessage(
-                "لطفاً نام نمایشی را وارد کن.",
-                "error"
-              );
-
-              return;
-
-            }
-
-
-            if (password.length < 6) {
-
-              showAuthMessage(
-                "رمز عبور باید حداقل ۶ کاراکتر باشد.",
-                "error"
-              );
-
-              return;
-
-            }
-
-
-            const {
-              data,
-              error
-            } =
-              await supabaseClient.auth.signUp({
-
-                email,
-
-                password,
-
-                options: {
-
-                  data: {
-                    display_name: name
-                  }
-
-                }
-
-              });
-
-
-            if (error) {
-
-              showAuthMessage(
-                error.message,
-                "error"
-              );
-
-              return;
-
-            }
-
-
-            /*
-              پروفایل توسط Trigger دیتابیس ساخته می‌شود.
-              اینجا دیگر از مرورگر insert نمی‌کنیم.
-            */
-
-
-            if (
-              data?.session
-            ) {
-
-              await loadApp(
-                data.user
-              );
-
-            } else {
-
-              showAuthMessage(
-                "ثبت‌نام انجام شد. اگر تأیید ایمیل فعال باشد، ایمیل خود را تأیید کن. بعد از تأیید، مدیر باید حساب تو را تأیید کند.",
-                "success"
-              );
-
-              $("passwordInput")
-                .value = "";
-
-            }
-
-
-            return;
-
-          }
-
-
-
-          /* =========================================
-             LOGIN
-          ========================================= */
 
           const {
             data,
             error
           } =
-            await supabaseClient.auth
-              .signInWithPassword({
-
-                email,
-
-                password
-
-              });
+            await supabaseClient.auth.signInWithPassword({
+              email,
+              password
+            });
 
 
           if (error) {
+            throw error;
+          }
 
-            showAuthMessage(
-              error.message,
-              "error"
+
+          if (!data?.user) {
+            throw new Error(
+              "ورود انجام نشد. کاربر دریافت نشد."
             );
-
-            return;
-
           }
 
 
           /*
             مهم:
-            اینجا loadApp را دستی صدا نمی‌زنیم.
 
-            onAuthStateChange فقط یک بار
-            SIGNED_IN را دریافت می‌کند
-            و loadApp را اجرا می‌کند.
+            اینجا مستقیم loadApp اجرا می‌شود.
+            دیگر منتظر SIGNED_IN نمی‌مانیم.
           */
 
-
-          showAuthMessage(
-            "در حال ورود...",
-            "success"
-          );
+          await loadApp(data.user);
 
 
         } catch (error) {
 
-          console.error(error);
+          console.error(
+            "LOGIN ERROR:",
+            error
+          );
 
           showAuthMessage(
-            "خطای غیرمنتظره رخ داد.",
+            getAuthErrorMessage(error),
             "error"
           );
 
+          try {
+            await supabaseClient.auth.signOut();
+          } catch {}
+
         } finally {
 
-          $("authButton")
-            .disabled = false;
+          isLoggingIn = false;
 
+          setLoginLoading(false);
         }
 
       }
     );
 
 
+    /* =========================================================
+       SIGNUP
+    ========================================================= */
 
-  /* =====================================================
-     LOAD APP
-  ===================================================== */
+    signupForm.addEventListener(
+      "submit",
+      async (event) => {
 
-  async function loadApp(user) {
+        event.preventDefault();
 
-    if (!user) {
-      return;
+        setSignupLoading(true);
+        clearAuthMessage();
+
+        const displayName =
+          document
+            .getElementById("signupName")
+            .value
+            .trim();
+
+        const email =
+          document
+            .getElementById("signupEmail")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("signupPassword")
+            .value;
+
+
+        try {
+
+          if (!displayName) {
+            throw new Error(
+              "نام نمایشی را وارد کن."
+            );
+          }
+
+          if (password.length < 6) {
+            throw new Error(
+              "رمز عبور باید حداقل ۶ کاراکتر باشد."
+            );
+          }
+
+
+          const {
+            data,
+            error
+          } =
+            await supabaseClient.auth.signUp({
+
+              email,
+              password,
+
+              options: {
+                data: {
+                  display_name: displayName
+                }
+              }
+
+            });
+
+
+          if (error) {
+            throw error;
+          }
+
+
+          /*
+            Confirm Email روشن است.
+
+            بنابراین معمولاً session نداریم.
+            Trigger دیتابیس پروفایل را خودش می‌سازد.
+          */
+
+          if (data?.session) {
+
+            showAuthMessage(
+              "ثبت‌نام انجام شد. حساب شما در انتظار تأیید مدیر است.",
+              "success"
+            );
+
+          } else {
+
+            showAuthMessage(
+              "ثبت‌نام انجام شد. ایمیل را تأیید کن؛ سپس مدیر باید اجازه ورود را فعال کند.",
+              "success"
+            );
+          }
+
+
+          signupForm.reset();
+
+
+        } catch (error) {
+
+          console.error(
+            "SIGNUP ERROR:",
+            error
+          );
+
+          showAuthMessage(
+            getAuthErrorMessage(error),
+            "error"
+          );
+
+        } finally {
+
+          setSignupLoading(false);
+        }
+
+      }
+    );
+
+
+    /* =========================================================
+       AUTH ERROR
+    ========================================================= */
+
+    function getAuthErrorMessage(error) {
+
+      const message =
+        String(error?.message || error || "");
+
+      const lower =
+        message.toLowerCase();
+
+
+      if (
+        lower.includes("invalid login credentials")
+      ) {
+        return "ایمیل یا رمز عبور اشتباه است.";
+      }
+
+
+      if (
+        lower.includes("email not confirmed")
+      ) {
+        return "ایمیل این حساب هنوز تأیید نشده است.";
+      }
+
+
+      if (
+        lower.includes("user already registered")
+      ) {
+        return "این ایمیل قبلاً ثبت‌نام کرده است.";
+      }
+
+
+      if (
+        lower.includes("password")
+      ) {
+        return message;
+      }
+
+
+      return message ||
+        "خطایی هنگام ورود رخ داد.";
     }
 
 
-    /*
-      جلوگیری از اجرای دوباره همزمان
-    */
+    /* =========================================================
+       LOAD APP
+    ========================================================= */
 
-    if (isLoadingApp) {
-      return;
+    async function loadApp(user) {
+
+      if (isLoadingApp) {
+        return;
+      }
+
+      isLoadingApp = true;
+
+
+      try {
+
+        console.log(
+          "LOAD APP FOR:",
+          user.id
+        );
+
+
+        const {
+          data: profile,
+          error: profileError
+        } =
+          await supabaseClient
+            .from("profiles")
+            .select(
+              "id,display_name,avatar_url,created_at,updated_at,approved"
+            )
+            .eq("id", user.id)
+            .maybeSingle();
+
+
+        if (profileError) {
+
+          console.error(
+            "PROFILE ERROR:",
+            profileError
+          );
+
+          throw new Error(
+            "دریافت اطلاعات حساب انجام نشد: " +
+            profileError.message
+          );
+        }
+
+
+        if (!profile) {
+
+          throw new Error(
+            "پروفایل این حساب هنوز ساخته نشده است."
+          );
+        }
+
+
+        console.log(
+          "PROFILE:",
+          profile
+        );
+
+
+        /*
+          کنترل اصلی تأیید مدیر
+        */
+
+        if (profile.approved !== true) {
+
+          await supabaseClient.auth.signOut();
+
+          showAuthMessage(
+            "این حساب هنوز توسط مدیر تأیید نشده است.",
+            "info"
+          );
+
+          showAuth();
+
+          return;
+        }
+
+
+        currentUser = user;
+        currentProfile = profile;
+
+
+        currentUserName.textContent =
+          profile.display_name || "کاربر";
+
+
+        showApp();
+
+
+        /*
+          این‌ها نباید ورود را متوقف کنند.
+        */
+
+        await loadUsers();
+
+        await detectAdmin();
+
+        startApprovalWatcher();
+
+        setupRealtime();
+
+
+      } catch (error) {
+
+        console.error(
+          "LOAD APP ERROR:",
+          error
+        );
+
+        await supabaseClient.auth.signOut();
+
+        showAuth();
+
+        showAuthMessage(
+          error?.message ||
+          "خطایی هنگام ورود به برنامه رخ داد.",
+          "error"
+        );
+
+      } finally {
+
+        isLoadingApp = false;
+      }
+
     }
 
 
-    isLoadingApp = true;
+    /* =========================================================
+       SHOW / HIDE
+    ========================================================= */
+
+    function showApp() {
+
+      authScreen.style.display = "none";
+      appScreen.style.display = "block";
+    }
 
 
-    try {
+    function showAuth() {
+
+      authScreen.style.display = "flex";
+      appScreen.style.display = "none";
+    }
 
 
-      currentUser = user;
+    /* =========================================================
+       LOAD USERS
+    ========================================================= */
+
+    async function loadUsers() {
+
+      usersList.innerHTML =
+        `<div class="admin-loading">
+          در حال دریافت کاربران...
+        </div>`;
 
 
       const {
-        data: profile,
+        data,
         error
       } =
         await supabaseClient
@@ -1532,254 +1467,228 @@
           .select(
             "id,display_name,avatar_url,created_at,updated_at,approved"
           )
-          .eq(
-            "id",
-            user.id
-          )
-          .maybeSingle();
+          .eq("approved", true)
+          .neq("id", currentUser.id)
+          .order(
+            "display_name",
+            { ascending: true }
+          );
 
 
       if (error) {
 
         console.error(
-          "PROFILE ERROR:",
+          "USERS ERROR:",
           error
         );
 
-        await supabaseClient.auth.signOut();
-
-        currentUser = null;
-
-        showAuth();
-
-        showAuthMessage(
-          "خطا در دریافت اطلاعات حساب.",
-          "error"
-        );
+        usersList.innerHTML =
+          `<div class="admin-loading">
+            خطا در دریافت کاربران
+          </div>`;
 
         return;
-
       }
 
 
-      if (!profile) {
+      if (!data || data.length === 0) {
 
-        await supabaseClient.auth.signOut();
-
-        currentUser = null;
-
-        showAuth();
-
-        showAuthMessage(
-          "پروفایل حساب پیدا نشد. لطفاً دوباره ثبت‌نام یا ورود کن.",
-          "error"
-        );
+        usersList.innerHTML =
+          `<div class="admin-loading">
+            هنوز کاربر دیگری وجود ندارد.
+          </div>`;
 
         return;
-
       }
 
 
-      currentProfile = profile;
+      usersList.innerHTML =
+        data.map(user => `
+
+          <div
+            class="user-item ${
+              selectedUser?.id === user.id
+                ? "active"
+                : ""
+            }"
+            data-user-id="${escapeHtml(user.id)}"
+          >
+
+            <div class="avatar">
+              ${getAvatarHtml(user)}
+            </div>
+
+            <div class="user-info">
+
+              <div class="user-name">
+                ${escapeHtml(
+                  user.display_name || "کاربر"
+                )}
+              </div>
+
+              <div class="user-status">
+                آنلاین در دوستانه
+              </div>
+
+            </div>
+
+          </div>
+
+        `).join("");
 
 
-      /*
-        حساب هنوز توسط مدیر تأیید نشده
-      */
+      usersList
+        .querySelectorAll(".user-item")
+        .forEach(item => {
 
-      if (
-        profile.approved !== true
-      ) {
+          item.addEventListener(
+            "click",
+            () => {
 
-        await supabaseClient.auth.signOut();
+              const id =
+                item.dataset.userId;
 
-        currentUser = null;
+              const user =
+                data.find(
+                  x => x.id === id
+                );
 
-        currentProfile = null;
+              if (user) {
+                selectUser(user);
+              }
 
-        showAuth();
+            }
+          );
 
-        showAuthMessage(
-          "حساب شما ثبت شده، اما هنوز توسط مدیر تأیید نشده است.",
-          "error"
-        );
+        });
 
-        return;
-
-      }
-
-
-      /* =========================================
-         SHOW APP
-      ========================================= */
-
-      showApp();
+    }
 
 
-      $("welcomeText")
-        .textContent =
-        "سلام " +
-        (
-          profile.display_name ||
-          "دوست من"
-        ) +
-        " 👋";
+    /* =========================================================
+       SELECT USER
+    ========================================================= */
+
+    async function selectUser(user) {
+
+      selectedUser = user;
 
 
-      $("profileNameInput")
-        .value =
-        profile.display_name || "";
+      chatName.textContent =
+        user.display_name || "کاربر";
 
 
-      renderProfileAvatar();
+      chatAvatar.innerHTML =
+        getAvatarHtml(user);
 
+
+      messageInput.disabled = false;
+      sendBtn.disabled = false;
+
+
+      await loadMessages();
 
       await loadUsers();
-
-
-      /*
-        بررسی مدیر بودن از طریق Edge Function
-      */
-
-      await detectAdmin();
-
-
-      /*
-        بررسی دوره‌ای وضعیت تأیید
-      */
-
-      startApprovalWatcher();
-
-
-    } finally {
-
-      isLoadingApp = false;
-
-    }
-
-  }
-
-
-
-  /* =====================================================
-     USERS
-  ===================================================== */
-
-  async function loadUsers() {
-
-    if (!currentUser) {
-      return;
     }
 
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id,display_name,avatar_url,created_at"
-        )
-        .neq(
-          "id",
-          currentUser.id
-        )
-        .order(
-          "display_name",
-          {
-            ascending: true
-          }
+    /* =========================================================
+       LOAD MESSAGES
+    ========================================================= */
+
+    async function loadMessages() {
+
+      if (!selectedUser || !currentUser) {
+        return;
+      }
+
+
+      chatMessages.innerHTML =
+        `<div class="admin-loading">
+          در حال دریافت پیام‌ها...
+        </div>`;
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("messages")
+          .select(
+            "id,sender_id,receiver_id,content,created_at"
+          )
+          .or(
+            `and(sender_id.eq.${currentUser.id},receiver_id.eq.${selectedUser.id}),and(sender_id.eq.${selectedUser.id},receiver_id.eq.${currentUser.id})`
+          )
+          .order(
+            "created_at",
+            { ascending: true }
+          );
+
+
+      if (error) {
+
+        console.error(
+          "MESSAGES ERROR:",
+          error
         );
 
+        chatMessages.innerHTML =
+          `<div class="empty-chat">
+            خطا در دریافت پیام‌ها
+          </div>`;
 
-    if (error) {
+        return;
+      }
 
-      console.error(error);
 
-      $("usersList").innerHTML =
-        `
-        <div class="error-box">
-          خطا در دریافت کاربران.
-        </div>
-        `;
-
-      return;
-
+      renderMessages(data || []);
     }
 
 
-    allUsers = data || [];
+    /* =========================================================
+       RENDER MESSAGES
+    ========================================================= */
 
-    renderUsers(allUsers);
+    function renderMessages(messages) {
 
-  }
+      if (!messages.length) {
 
+        chatMessages.innerHTML =
+          `<div class="empty-chat">
+            هنوز پیامی وجود ندارد.<br>
+            اولین پیام را تو بفرست 👋
+          </div>`;
 
-  function renderUsers(users) {
-
-    if (!users.length) {
-
-      $("usersList").innerHTML =
-        `
-        <div class="page-card">
-          هنوز کاربر دیگری وجود ندارد.
-        </div>
-        `;
-
-      return;
-
-    }
+        return;
+      }
 
 
-    $("usersList").innerHTML =
-      users
-        .map(user => {
+      chatMessages.innerHTML =
+        messages.map(message => {
 
-          const name =
-            user.display_name ||
-            "کاربر";
-
-
-          const avatar =
-            user.avatar_url
-
-              ? `
-                <img
-                  src="${escapeHtml(
-                    user.avatar_url
-                  )}"
-                  alt=""
-                >
-              `
-
-              : escapeHtml(
-                  getInitial(name)
-                );
+          const mine =
+            message.sender_id === currentUser.id;
 
 
           return `
 
-            <div
-              class="user-card"
-              data-user-id="${escapeHtml(
-                user.id
-              )}"
-            >
+            <div class="msg-row ${
+              mine ? "mine" : "theirs"
+            }">
 
-              <div class="avatar">
-                ${avatar}
-              </div>
+              <div class="bubble">
 
-              <div class="user-info">
+                ${escapeHtml(
+                  message.content
+                )}
 
-                <div class="user-name">
-                  ${escapeHtml(name)}
-                </div>
-
-                <div class="user-status">
-                  آماده گفتگو
-                </div>
+                <span class="msg-time">
+                  ${formatDate(
+                    message.created_at
+                  )}
+                </span>
 
               </div>
 
@@ -1787,587 +1696,25 @@
 
           `;
 
-        })
-        .join("");
+        }).join("");
 
 
-    document
-      .querySelectorAll(".user-card")
-      .forEach(card => {
-
-        card.addEventListener(
-          "click",
-          () => {
-
-            const user =
-              allUsers.find(
-                item =>
-                  item.id ===
-                  card.dataset.userId
-              );
-
-
-            if (user) {
-
-              openChat(user);
-
-            }
-
-          }
-        );
-
-      });
-
-  }
-
-
-  $("searchInput")
-    .addEventListener(
-      "input",
-      () => {
-
-        const query =
-          $("searchInput")
-            .value
-            .trim()
-            .toLowerCase();
-
-
-        if (!query) {
-
-          renderUsers(
-            allUsers
-          );
-
-          return;
-
-        }
-
-
-        const filtered =
-          allUsers.filter(
-            user =>
-              String(
-                user.display_name || ""
-              )
-              .toLowerCase()
-              .includes(query)
-          );
-
-
-        renderUsers(filtered);
-
-      }
-    );
-
-
-
-  /* =====================================================
-     PROFILE
-  ===================================================== */
-
-  function renderProfileAvatar() {
-
-    const name =
-      currentProfile?.display_name ||
-      "کاربر";
-
-
-    if (
-      currentProfile?.avatar_url
-    ) {
-
-      $("profileAvatar")
-        .innerHTML =
-        `
-        <img
-          src="${escapeHtml(
-            currentProfile.avatar_url
-          )}"
-          alt=""
-        >
-        `;
-
-    } else {
-
-      $("profileAvatar")
-        .textContent =
-        getInitial(name);
-
-    }
-
-  }
-
-
-  $("profileBtn")
-    .addEventListener(
-      "click",
-      () => {
-
-        $("appScreen")
-          .classList.add("hidden");
-
-        $("profilePage")
-          .classList.remove("hidden");
-
-        $("profileNameInput")
-          .value =
-          currentProfile?.display_name ||
-          "";
-
-        renderProfileAvatar();
-
-      }
-    );
-
-
-  $("backProfileBtn")
-    .addEventListener(
-      "click",
-      () => {
-
-        $("profilePage")
-          .classList.add("hidden");
-
-        $("appScreen")
-          .classList.remove("hidden");
-
-      }
-    );
-
-
-  $("saveProfileBtn")
-    .addEventListener(
-      "click",
-      async () => {
-
-        if (!currentUser) {
-          return;
-        }
-
-
-        const name =
-          $("profileNameInput")
-            .value
-            .trim();
-
-
-        if (!name) {
-
-          alert(
-            "نام نمایشی را وارد کن."
-          );
-
-          return;
-
-        }
-
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("profiles")
-            .update({
-              display_name: name
-            })
-            .eq(
-              "id",
-              currentUser.id
-            );
-
-
-        if (error) {
-
-          alert(
-            "ذخیره نشد:\n" +
-            error.message
-          );
-
-          return;
-
-        }
-
-
-        currentProfile.display_name =
-          name;
-
-
-        $("welcomeText")
-          .textContent =
-          "سلام " +
-          name +
-          " 👋";
-
-
-        renderProfileAvatar();
-
-        $("profilePage")
-          .classList.add("hidden");
-
-        $("appScreen")
-          .classList.remove("hidden");
-
-
-        await loadUsers();
-
-      }
-    );
-
-
-
-  /* =====================================================
-     CHAT
-  ===================================================== */
-
-  async function openChat(user) {
-
-    currentChatUser = user;
-
-
-    $("chatTitle")
-      .textContent =
-      user.display_name ||
-      "کاربر";
-
-
-    if (user.avatar_url) {
-
-      $("chatAvatar")
-        .innerHTML =
-        `
-        <img
-          src="${escapeHtml(
-            user.avatar_url
-          )}"
-          alt=""
-        >
-        `;
-
-    } else {
-
-      $("chatAvatar")
-        .textContent =
-        getInitial(
-          user.display_name
-        );
-
+      chatMessages.scrollTop =
+        chatMessages.scrollHeight;
     }
 
 
-    $("chatPage")
-      .classList.remove("hidden");
-
-
-    await loadMessages();
-
-    subscribeToMessages();
-
-  }
-
-
-  $("backChatBtn")
-    .addEventListener(
-      "click",
-      closeChat
-    );
-
-
-  function closeChat() {
-
-    $("chatPage")
-      .classList.add("hidden");
-
-
-    currentChatUser = null;
-
-
-    if (messageChannel) {
-
-      supabaseClient
-        .removeChannel(
-          messageChannel
-        );
-
-      messageChannel = null;
-
-    }
-
-  }
-
-
-  async function loadMessages() {
-
-    if (
-      !currentUser ||
-      !currentChatUser
-    ) {
-      return;
-    }
-
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("messages")
-        .select(
-          "id,sender_id,receiver_id,content,created_at"
-        )
-        .or(
-          `and(sender_id.eq.${currentUser.id},receiver_id.eq.${currentChatUser.id}),and(sender_id.eq.${currentChatUser.id},receiver_id.eq.${currentUser.id})`
-        )
-        .order(
-          "created_at",
-          {
-            ascending: true
-          }
-        );
-
-
-    if (error) {
-
-      console.error(error);
-
-      $("messagesList").innerHTML =
-        `
-        <div class="error-box">
-          امکان دریافت پیام‌ها وجود ندارد.
-        </div>
-        `;
-
-      return;
-
-    }
-
-
-    renderMessages(
-      data || []
-    );
-
-  }
-
-
-  function renderMessages(messages) {
-
-    $("messagesList")
-      .innerHTML = "";
-
-
-    messages.forEach(
-      appendMessage
-    );
-
-
-    scrollMessagesToBottom();
-
-  }
-
-
-  function appendMessage(message) {
-
-    const mine =
-      message.sender_id ===
-      currentUser.id;
-
-
-    const row =
-      document.createElement(
-        "div"
-      );
-
-
-    row.className =
-      "message-row " +
-      (
-        mine
-          ? "mine"
-          : "theirs"
-      );
-
-
-    const bubble =
-      document.createElement(
-        "div"
-      );
-
-
-    bubble.className =
-      "message-bubble";
-
-
-    bubble.textContent =
-      message.content;
-
-
-    row.appendChild(
-      bubble
-    );
-
-
-    $("messagesList")
-      .appendChild(row);
-
-  }
-
-
-  function scrollMessagesToBottom() {
-
-    const box =
-      $("messagesList");
-
-
-    box.scrollTop =
-      box.scrollHeight;
-
-  }
-
-
-  function subscribeToMessages() {
-
-    if (
-      !currentUser ||
-      !currentChatUser
-    ) {
-      return;
-    }
-
-
-    if (messageChannel) {
-
-      supabaseClient
-        .removeChannel(
-          messageChannel
-        );
-
-    }
-
-
-    messageChannel =
-      supabaseClient
-        .channel(
-          "messages-" +
-          currentUser.id +
-          "-" +
-          currentChatUser.id
-        )
-        .on(
-          "postgres_changes",
-          {
-            event: "INSERT",
-            schema: "public",
-            table: "messages"
-          },
-          payload => {
-
-            const message =
-              payload.new;
-
-
-            const relevant =
-              (
-                message.sender_id ===
-                currentUser.id &&
-                message.receiver_id ===
-                currentChatUser.id
-              )
-              ||
-              (
-                message.sender_id ===
-                currentChatUser.id &&
-                message.receiver_id ===
-                currentUser.id
-              );
-
-
-            if (relevant) {
-
-              appendMessage(
-                message
-              );
-
-              scrollMessagesToBottom();
-
-            }
-
-          }
-        )
-        .subscribe();
-
-  }
-
-
-  async function sendMessage() {
-
-    if (
-      !currentUser ||
-      !currentChatUser
-    ) {
-      return;
-    }
-
-
-    const input =
-      $("messageInput");
-
-
-    const content =
-      input.value.trim();
-
-
-    if (!content) {
-      return;
-    }
-
-
-    input.value = "";
-
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("messages")
-        .insert({
-
-          sender_id:
-            currentUser.id,
-
-          receiver_id:
-            currentChatUser.id,
-
-          content
-
-        });
-
-
-    if (error) {
-
-      console.error(error);
-
-      alert(
-        "پیام ارسال نشد:\n" +
-        error.message
-      );
-
-      input.value =
-        content;
-
-    }
-
-  }
-
-
-  $("sendMessageBtn")
-    .addEventListener(
+    /* =========================================================
+       SEND MESSAGE
+    ========================================================= */
+
+    sendBtn.addEventListener(
       "click",
       sendMessage
     );
 
 
-  $("messageInput")
-    .addEventListener(
+    messageInput.addEventListener(
       "keydown",
       event => {
 
@@ -2379,764 +1726,843 @@
           event.preventDefault();
 
           sendMessage();
-
         }
 
       }
     );
 
 
+    async function sendMessage() {
 
-  /* =====================================================
-     ADMIN REQUEST
-  ===================================================== */
+      if (
+        !currentUser ||
+        !selectedUser
+      ) {
+        return;
+      }
 
-  async function adminRequest(body) {
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .functions
-        .invoke(
-          "admin-panel",
-          {
-            body
-          }
+      const content =
+        messageInput.value.trim();
+
+
+      if (!content) {
+        return;
+      }
+
+
+      sendBtn.disabled = true;
+
+
+      try {
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("messages")
+            .insert({
+              sender_id: currentUser.id,
+              receiver_id: selectedUser.id,
+              content
+            });
+
+
+        if (error) {
+          throw error;
+        }
+
+
+        messageInput.value = "";
+
+        await loadMessages();
+
+
+      } catch (error) {
+
+        console.error(
+          "SEND ERROR:",
+          error
         );
 
+        alert(
+          "ارسال پیام انجام نشد: " +
+          (error?.message || "")
+        );
 
-    if (error) {
+      } finally {
 
-      throw error;
+        sendBtn.disabled = false;
+
+        messageInput.focus();
+      }
+
+    }
+
+
+    /* =========================================================
+       REALTIME
+    ========================================================= */
+
+    function setupRealtime() {
+
+      if (messageChannel) {
+
+        supabaseClient.removeChannel(
+          messageChannel
+        );
+
+        messageChannel = null;
+      }
+
+
+      messageChannel =
+        supabaseClient
+          .channel(
+            "messages-realtime-" +
+            currentUser.id
+          )
+          .on(
+            "postgres_changes",
+            {
+              event: "INSERT",
+              schema: "public",
+              table: "messages"
+            },
+            payload => {
+
+              const message =
+                payload.new;
+
+
+              if (
+                !selectedUser ||
+                !currentUser
+              ) {
+                return;
+              }
+
+
+              const belongs =
+                (
+                  message.sender_id === currentUser.id &&
+                  message.receiver_id === selectedUser.id
+                ) ||
+                (
+                  message.sender_id === selectedUser.id &&
+                  message.receiver_id === currentUser.id
+                );
+
+
+              if (belongs) {
+                loadMessages();
+              }
+
+            }
+          )
+          .subscribe();
 
     }
 
 
-    return data;
+    /* =========================================================
+       ADMIN DETECTION
+    ========================================================= */
 
-  }
+    async function detectAdmin() {
 
-
-
-  /* =====================================================
-     DETECT ADMIN
-  ===================================================== */
-
-  async function detectAdmin() {
-
-    isAdmin = false;
+      adminPanel.classList.add("hidden");
 
 
-    $("adminBtn")
-      .classList.add("hidden");
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.functions.invoke(
+            "admin-panel",
+            {
+              body: {
+                action: "list"
+              }
+            }
+          );
 
 
-    try {
+        if (error) {
 
-      await adminRequest({
-        action: "list"
-      });
+          console.log(
+            "ADMIN CHECK:",
+            error
+          );
 
-
-      /*
-        اگر سرور اجازه داد،
-        این کاربر مدیر است.
-      */
-
-      isAdmin = true;
-
-
-      $("adminBtn")
-        .classList.remove("hidden");
-
-
-    } catch (error) {
-
-      /*
-        کاربر عادی اینجا 403 می‌گیرد.
-      */
-
-      isAdmin = false;
-
-
-      $("adminBtn")
-        .classList.add("hidden");
-
-
-      console.log(
-        "Normal user:",
-        error.message
-      );
-
-    }
-
-  }
-
-
-
-  /* =====================================================
-     OPEN ADMIN
-  ===================================================== */
-
-  $("adminBtn")
-    .addEventListener(
-      "click",
-      async () => {
-
-        if (!isAdmin) {
           return;
         }
 
 
-        $("appScreen")
-          .classList.add("hidden");
+        if (
+          data &&
+          Array.isArray(data.users)
+        ) {
+
+          adminPanel.classList.remove(
+            "hidden"
+          );
+
+          renderAdminData(data);
+        }
 
 
-        $("adminPage")
-          .classList.remove("hidden");
+      } catch (error) {
 
-
-        await loadAdminPanel();
-
+        console.log(
+          "ADMIN DETECTION ERROR:",
+          error
+        );
       }
-    );
+
+    }
 
 
-  $("closeAdminBtn")
-    .addEventListener(
-      "click",
-      () => {
+    /* =========================================================
+       LOAD ADMIN DATA
+    ========================================================= */
 
-        $("adminPage")
-          .classList.add("hidden");
+    async function loadAdminData() {
 
-
-        $("appScreen")
-          .classList.remove("hidden");
-
+      if (!currentUser) {
+        return;
       }
-    );
 
 
-  $("refreshAdminBtn")
-    .addEventListener(
-      "click",
-      loadAdminPanel
-    );
+      adminUsers.innerHTML =
+        `<div class="admin-loading">
+          در حال دریافت اطلاعات...
+        </div>`;
 
 
+      try {
 
-  /* =====================================================
-     LOAD ADMIN PANEL
-  ===================================================== */
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.functions.invoke(
+            "admin-panel",
+            {
+              body: {
+                action: "list"
+              }
+            }
+          );
 
-  async function loadAdminPanel() {
 
-    $("adminUsersList")
-      .innerHTML =
-      `
-      <div class="loading">
-        در حال دریافت اطلاعات...
-      </div>
+        if (error) {
+          throw error;
+        }
+
+
+        if (!data) {
+          throw new Error(
+            "پاسخی از پنل مدیریت دریافت نشد."
+          );
+        }
+
+
+        renderAdminData(data);
+
+
+      } catch (error) {
+
+        console.error(
+          "ADMIN LOAD ERROR:",
+          error
+        );
+
+        adminUsers.innerHTML =
+          `<div class="admin-loading">
+            خطا در دریافت پنل مدیریت
+          </div>`;
+      }
+
+    }
+
+
+    /* =========================================================
+       RENDER ADMIN
+    ========================================================= */
+
+    function renderAdminData(data) {
+
+      const stats =
+        data.stats || {};
+
+
+      adminStats.innerHTML = `
+
+        <div class="stat">
+
+          <div class="stat-number">
+            ${stats.total_users || 0}
+          </div>
+
+          <div class="stat-label">
+            کل کاربران
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-number">
+            ${stats.approved_users || 0}
+          </div>
+
+          <div class="stat-label">
+            تأیید شده
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-number">
+            ${stats.pending_users || 0}
+          </div>
+
+          <div class="stat-label">
+            در انتظار
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-number">
+            ${stats.total_messages || 0}
+          </div>
+
+          <div class="stat-label">
+            پیام‌ها
+          </div>
+
+        </div>
+
       `;
 
 
-    try {
+      const users =
+        data.users || [];
 
-      const result =
-        await adminRequest({
-          action: "list"
-        });
 
+      if (!users.length) {
 
-      isAdmin = true;
+        adminUsers.innerHTML =
+          `<div class="admin-loading">
+            کاربری وجود ندارد.
+          </div>`;
 
+        return;
+      }
 
-      const stats =
-        result.stats || {};
 
+      adminUsers.innerHTML =
+        users.map(user => {
 
-      $("adminStats")
-        .innerHTML = `
-
-          <div class="stat-card">
-
-            <div class="stat-number">
-              ${stats.total_users ?? 0}
-            </div>
-
-            <div class="stat-label">
-              کل کاربران
-            </div>
-
-          </div>
-
-
-          <div class="stat-card">
-
-            <div class="stat-number">
-              ${stats.approved_users ?? 0}
-            </div>
-
-            <div class="stat-label">
-              تأیید شده
-            </div>
-
-          </div>
-
-
-          <div class="stat-card">
-
-            <div class="stat-number">
-              ${stats.pending_users ?? 0}
-            </div>
-
-            <div class="stat-label">
-              در انتظار
-            </div>
-
-          </div>
-
-
-          <div class="stat-card">
-
-            <div class="stat-number">
-              ${stats.total_messages ?? 0}
-            </div>
-
-            <div class="stat-label">
-              کل پیام‌ها
-            </div>
-
-          </div>
-
-        `;
-
-
-      renderAdminUsers(
-        result.users || []
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        "ADMIN ERROR:",
-        error
-      );
-
-
-      isAdmin = false;
-
-
-      $("adminBtn")
-        .classList.add("hidden");
-
-
-      $("adminUsersList")
-        .innerHTML =
-        `
-        <div class="error-box">
-          دسترسی به پنل مدیریت وجود ندارد.
-        </div>
-        `;
-
-    }
-
-  }
-
-
-
-  /* =====================================================
-     RENDER ADMIN USERS
-  ===================================================== */
-
-  function renderAdminUsers(users) {
-
-    if (!users.length) {
-
-      $("adminUsersList")
-        .innerHTML =
-        `
-        <div class="page-card">
-          هنوز کاربری وجود ندارد.
-        </div>
-        `;
-
-      return;
-
-    }
-
-
-    $("adminUsersList")
-      .innerHTML =
-      users
-        .map(user => {
-
-          const isMe =
-            user.id ===
-            currentUser.id;
-
-
-          const name =
-            user.display_name ||
-            "کاربر";
-
-
-          const avatar =
-            user.avatar_url
-
-              ? `
-                <img
-                  src="${escapeHtml(
-                    user.avatar_url
-                  )}"
-                  alt=""
-                >
-              `
-
-              : escapeHtml(
-                  getInitial(name)
-                );
-
-
-          let action;
-
-
-          if (isMe) {
-
-            action =
-              `
-              <span class="admin-badge">
-                مدیر
-              </span>
-              `;
-
-          } else {
-
-            action =
-              `
-              <button
-                class="
-                  approval-btn
-                  ${
-                    user.approved
-                      ? "approval-on"
-                      : "approval-off"
-                  }
-                "
-                data-user-id="${escapeHtml(
-                  user.id
-                )}"
-                data-approved="${
-                  user.approved
-                    ? "true"
-                    : "false"
-                }"
-              >
-                ${
-                  user.approved
-                    ? "فعال ✓"
-                    : "تأیید نشده"
-                }
-              </button>
-              `;
-
-          }
+          const isCurrent =
+            user.id === currentUser.id;
 
 
           return `
 
             <div class="admin-user">
 
-              <div class="avatar">
-                ${avatar}
+              <div class="admin-user-main">
+
+                <div class="avatar">
+                  ${getAvatarHtml(user)}
+                </div>
+
+                <div class="admin-user-text">
+
+                  <div class="admin-user-name">
+                    ${escapeHtml(
+                      user.display_name || "کاربر"
+                    )}
+                  </div>
+
+                  <div class="admin-user-meta">
+                    ${user.message_count || 0}
+                    پیام
+                    •
+                    ${formatDate(
+                      user.created_at
+                    )}
+                  </div>
+
+                </div>
+
               </div>
 
 
-              <div class="admin-user-info">
+              ${
+                isCurrent
 
-                <div class="admin-user-name">
-                  ${escapeHtml(name)}
-                </div>
+                ? `
+                  <button
+                    class="approval-btn approval-on"
+                    disabled
+                  >
+                    مدیر
+                  </button>
+                `
 
-                <div class="admin-user-date">
-                  عضویت:
-                  ${formatDate(
-                    user.created_at
-                  )}
-                </div>
-
-                <div class="admin-user-date">
-                  پیام‌ها:
-                  ${
-                    user.message_count ??
-                    0
-                  }
-                </div>
-
-              </div>
-
-
-              ${action}
+                : `
+                  <button
+                    class="approval-btn ${
+                      user.approved
+                        ? "approval-on"
+                        : "approval-off"
+                    }"
+                    data-approval-id="${escapeHtml(user.id)}"
+                    data-approved="${user.approved}"
+                  >
+                    ${
+                      user.approved
+                        ? "✓ اجازه ورود"
+                        : "✕ بدون اجازه"
+                    }
+                  </button>
+                `
+              }
 
             </div>
 
           `;
 
-        })
-        .join("");
+        }).join("");
 
 
-    document
-      .querySelectorAll(
-        "[data-user-id]"
-      )
-      .forEach(button => {
-
-        button.addEventListener(
-          "click",
-          async () => {
-
-            const userId =
-              button.dataset.userId;
-
-
-            const oldApproved =
-              button.dataset.approved ===
-              "true";
-
-
-            const newApproved =
-              !oldApproved;
-
-
-            const question =
-              newApproved
-
-                ? "اجازه ورود این کاربر فعال شود؟"
-
-                : "اجازه ورود این کاربر لغو شود؟";
-
-
-            if (
-              !confirm(question)
-            ) {
-              return;
-            }
-
-
-            button.disabled = true;
-
-
-            try {
-
-              await adminRequest({
-
-                action:
-                  "set_approval",
-
-                target_user_id:
-                  userId,
-
-                approved:
-                  newApproved
-
-              });
-
-
-              await loadAdminPanel();
-
-
-            } catch (error) {
-
-              console.error(
-                "APPROVAL ERROR:",
-                error
-              );
-
-
-              alert(
-                "تغییر وضعیت انجام نشد:\n" +
-                error.message
-              );
-
-
-              button.disabled =
-                false;
-
-            }
-
-          }
-        );
-
-      });
-
-  }
-
-
-
-  /* =====================================================
-     APPROVAL WATCHER
-  ===================================================== */
-
-  function startApprovalWatcher() {
-
-    if (approvalTimer) {
-
-      clearInterval(
-        approvalTimer
-      );
-
-    }
-
-
-    approvalTimer =
-      setInterval(
-        checkApproval,
-        30000
-      );
-
-  }
-
-
-  async function checkApproval() {
-
-    if (!currentUser) {
-      return;
-    }
-
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select("approved")
-        .eq(
-          "id",
-          currentUser.id
+      adminUsers
+        .querySelectorAll(
+          "[data-approval-id]"
         )
-        .maybeSingle();
+        .forEach(button => {
+
+          button.addEventListener(
+            "click",
+            async () => {
+
+              const userId =
+                button.dataset.approvalId;
+
+              const approved =
+                button.dataset.approved !== "true";
 
 
-    if (error || !data) {
-      return;
+              await setApproval(
+                userId,
+                approved
+              );
+
+            }
+          );
+
+        });
+
     }
 
 
-    if (
-      data.approved !== true
+    /* =========================================================
+       SET APPROVAL
+    ========================================================= */
+
+    async function setApproval(
+      targetUserId,
+      approved
     ) {
 
-      await forceLogout(
-        "اجازه ورود حساب شما توسط مدیر لغو شده است."
-      );
+      try {
 
-    }
-
-  }
-
-
-
-  /* =====================================================
-     FORCE LOGOUT
-  ===================================================== */
-
-  async function forceLogout(message) {
-
-    if (approvalTimer) {
-
-      clearInterval(
-        approvalTimer
-      );
-
-      approvalTimer = null;
-
-    }
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.functions.invoke(
+            "admin-panel",
+            {
+              body: {
+                action: "set_approval",
+                target_user_id:
+                  targetUserId,
+                approved
+              }
+            }
+          );
 
 
-    if (messageChannel) {
+        if (error) {
+          throw error;
+        }
 
-      await supabaseClient
-        .removeChannel(
-          messageChannel
+
+        if (data?.error) {
+          throw new Error(data.error);
+        }
+
+
+        await loadAdminData();
+
+        await loadUsers();
+
+
+      } catch (error) {
+
+        console.error(
+          "APPROVAL ERROR:",
+          error
         );
 
-      messageChannel = null;
+        alert(
+          error?.message ||
+          "تغییر وضعیت کاربر انجام نشد."
+        );
+      }
 
     }
 
 
-    await supabaseClient.auth
-      .signOut();
+    /* =========================================================
+       APPROVAL WATCHER
+    ========================================================= */
+
+    function startApprovalWatcher() {
+
+      stopApprovalWatcher();
 
 
-    currentUser = null;
-
-    currentProfile = null;
-
-    currentChatUser = null;
-
-    allUsers = [];
-
-    isAdmin = false;
+      approvalTimer =
+        setInterval(
+          checkMyApproval,
+          30000
+        );
+    }
 
 
-    showAuth();
+    function stopApprovalWatcher() {
+
+      if (approvalTimer) {
+
+        clearInterval(
+          approvalTimer
+        );
+
+        approvalTimer = null;
+      }
+
+    }
 
 
-    showAuthMessage(
-      message,
-      "error"
+    async function checkMyApproval() {
+
+      if (!currentUser) {
+        return;
+      }
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select("approved")
+          .eq("id", currentUser.id)
+          .maybeSingle();
+
+
+      if (error) {
+        return;
+      }
+
+
+      if (!data || data.approved !== true) {
+
+        await logout();
+      }
+
+    }
+
+
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
+
+    logoutBtn.addEventListener(
+      "click",
+      logout
     );
 
-  }
+
+    async function logout() {
+
+      stopApprovalWatcher();
 
 
+      if (messageChannel) {
 
-  /* =====================================================
-     LOGOUT
-  ===================================================== */
+        try {
 
-  $("logoutBtn")
-    .addEventListener(
+          await supabaseClient
+            .removeChannel(
+              messageChannel
+            );
+
+        } catch {}
+
+        messageChannel = null;
+      }
+
+
+      currentUser = null;
+      currentProfile = null;
+      selectedUser = null;
+
+
+      messageInput.disabled = true;
+      sendBtn.disabled = true;
+
+
+      chatName.textContent =
+        "یک کاربر را انتخاب کن";
+
+      chatAvatar.innerHTML =
+        "👤";
+
+      chatMessages.innerHTML =
+        `<div class="empty-chat">
+          برای شروع گفتگو یک کاربر را انتخاب کن
+        </div>`;
+
+
+      adminPanel.classList.add(
+        "hidden"
+      );
+
+
+      try {
+        await supabaseClient.auth.signOut();
+      } catch {}
+
+
+      showAuth();
+
+      loginForm.reset();
+
+      clearAuthMessage();
+
+    }
+
+
+    /* =========================================================
+       REFRESH
+    ========================================================= */
+
+    refreshBtn.addEventListener(
       "click",
       async () => {
 
-        await forceLogout(
-          "از حساب خارج شدید."
-        );
+        if (!currentUser) {
+          return;
+        }
 
-        hideAuthMessage();
+        await loadUsers();
 
-      }
-    );
-
-
-
-  /* =====================================================
-     AUTH STATE CHANGE
-  ===================================================== */
-
-  supabaseClient.auth
-    .onAuthStateChange(
-      async (
-        event,
-        session
-      ) => {
-
-        /*
-          فقط SIGNED_IN اینجا loadApp را اجرا می‌کند.
-
-          INITIAL_SESSION در init مدیریت می‌شود.
-          بنابراین ورود دوبار اجرا نمی‌شود.
-        */
+        if (selectedUser) {
+          await loadMessages();
+        }
 
         if (
-          event === "SIGNED_IN" &&
-          session?.user
+          !adminPanel.classList.contains(
+            "hidden"
+          )
         ) {
-
-          await loadApp(
-            session.user
-          );
-
+          await loadAdminData();
         }
 
       }
     );
 
 
+    adminRefreshBtn.addEventListener(
+      "click",
+      loadAdminData
+    );
 
-  /* =====================================================
-     PWA
-  ===================================================== */
 
-  if (
-    "serviceWorker" in navigator
-  ) {
+    /* =========================================================
+       AUTH STATE CHANGE
+    ========================================================= */
 
-    window.addEventListener(
-      "load",
-      () => {
+    /*
+      خیلی مهم:
 
-        navigator.serviceWorker
-          .register(
-            "./service-worker.js"
-          )
-          .catch(
-            console.error
-          );
+      اینجا دیگر برای SIGNED_IN، loadApp اجرا نمی‌کنیم.
+
+      چون در loginForm خودمان مستقیم loadApp
+      را اجرا کرده‌ایم.
+
+      این کار جلوی اجرای دوباره و گیر کردن
+      روی "در حال ورود..." را می‌گیرد.
+    */
+
+    supabaseClient.auth.onAuthStateChange(
+      async (event, session) => {
+
+        console.log(
+          "AUTH EVENT:",
+          event
+        );
+
+
+        if (event === "SIGNED_OUT") {
+
+          stopApprovalWatcher();
+
+          currentUser = null;
+          currentProfile = null;
+
+          showAuth();
+        }
 
       }
     );
 
-  }
+
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
+    async function init() {
+
+      try {
+
+        console.log(
+          "INITIALIZING..."
+        );
 
 
-
-  /* =====================================================
-     INITIAL LOAD
-  ===================================================== */
-
-  async function init() {
-
-    setAuthMode(
-      "signup"
-    );
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getSession();
 
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.auth
-        .getSession();
+        if (error) {
+
+          console.error(
+            "SESSION ERROR:",
+            error
+          );
+
+          showAuth();
+
+          return;
+        }
 
 
-    if (error) {
+        const session =
+          data?.session;
 
-      console.error(
-        "SESSION ERROR:",
-        error
-      );
 
-      showAuth();
+        if (session?.user) {
 
-      return;
+          console.log(
+            "EXISTING SESSION:",
+            session.user.id
+          );
+
+
+          await loadApp(
+            session.user
+          );
+
+        } else {
+
+          showAuth();
+
+        }
+
+
+      } catch (error) {
+
+        console.error(
+          "INIT ERROR:",
+          error
+        );
+
+        showAuth();
+
+      }
 
     }
 
+
+    /* =========================================================
+       SERVICE WORKER
+    ========================================================= */
 
     if (
-      data?.session?.user
+      "serviceWorker" in navigator
     ) {
 
-      /*
-        INITIAL_SESSION را اینجا
-        مدیریت می‌کنیم.
-      */
+      window.addEventListener(
+        "load",
+        () => {
 
-      await loadApp(
-        data.session.user
+          navigator.serviceWorker
+            .register(
+              "./service-worker.js"
+            )
+            .then(
+              registration => {
+
+                console.log(
+                  "Service Worker registered:",
+                  registration.scope
+                );
+
+              }
+            )
+            .catch(
+              error => {
+
+                console.log(
+                  "Service Worker error:",
+                  error
+                );
+
+              }
+            );
+
+        }
       );
-
-    } else {
-
-      showAuth();
 
     }
 
-  }
 
+    /* =========================================================
+       START
+    ========================================================= */
 
-  init();
+    init();
 
-</script>
+  </script>
 
 </body>
 </html>
