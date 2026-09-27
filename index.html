@@ -841,10 +841,22 @@
     let selectedUser = null;
 
     let messageChannel = null;
+
     let approvalTimer = null;
+
+    /*
+      تایمر مخصوص پنل مدیر
+      برای دیدن ثبت‌نام‌های جدید
+    */
+    let adminRefreshTimer = null;
 
     let isLoadingApp = false;
     let isLoggingIn = false;
+
+    /*
+      جلوگیری از چند بار همزمان دریافت اطلاعات مدیر
+    */
+    let isLoadingAdmin = false;
 
 
     /* =========================================================
@@ -1099,13 +1111,6 @@
           }
 
 
-          /*
-            مهم:
-
-            اینجا مستقیم loadApp اجرا می‌شود.
-            دیگر منتظر SIGNED_IN نمی‌مانیم.
-          */
-
           await loadApp(data.user);
 
 
@@ -1204,13 +1209,6 @@
             throw error;
           }
 
-
-          /*
-            Confirm Email روشن است.
-
-            بنابراین معمولاً session نداریم.
-            Trigger دیتابیس پروفایل را خودش می‌سازد.
-          */
 
           if (data?.session) {
 
@@ -1360,10 +1358,6 @@
         );
 
 
-        /*
-          کنترل اصلی تأیید مدیر
-        */
-
         if (profile.approved !== true) {
 
           await supabaseClient.auth.signOut();
@@ -1389,10 +1383,6 @@
 
         showApp();
 
-
-        /*
-          این‌ها نباید ورود را متوقف کنند.
-        */
 
         await loadUsers();
 
@@ -1451,6 +1441,11 @@
     ========================================================= */
 
     async function loadUsers() {
+
+      if (!currentUser) {
+        return;
+      }
+
 
       usersList.innerHTML =
         `<div class="admin-loading">
@@ -1873,6 +1868,8 @@
 
       adminPanel.classList.add("hidden");
 
+      stopAdminAutoRefresh();
+
 
       try {
 
@@ -1906,11 +1903,37 @@
           Array.isArray(data.users)
         ) {
 
+          /*
+            مدیر شناسایی شد.
+            پنل را نمایش بده.
+          */
+
           adminPanel.classList.remove(
             "hidden"
           );
 
+
+          /*
+            اطلاعات را همان لحظه بگیر.
+          */
+
           renderAdminData(data);
+
+
+          /*
+            یک بار دیگر از سرور دریافت کن
+            تا آخرین وضعیت ثبت‌نام‌ها حتماً بیاید.
+          */
+
+          await loadAdminData();
+
+
+          /*
+            از اینجا به بعد هر ۱۰ ثانیه
+            لیست خودکار تازه می‌شود.
+          */
+
+          startAdminAutoRefresh();
         }
 
 
@@ -1926,6 +1949,96 @@
 
 
     /* =========================================================
+       ADMIN AUTO REFRESH
+    ========================================================= */
+
+    function startAdminAutoRefresh() {
+
+      stopAdminAutoRefresh();
+
+
+      /*
+        هر ۱۰ ثانیه پنل مدیر تازه می‌شود.
+      */
+
+      adminRefreshTimer =
+        setInterval(
+          async () => {
+
+            if (!currentUser) {
+              return;
+            }
+
+
+            if (
+              adminPanel.classList.contains(
+                "hidden"
+              )
+            ) {
+              return;
+            }
+
+
+            await loadAdminData();
+
+          },
+          10000
+        );
+    }
+
+
+    function stopAdminAutoRefresh() {
+
+      if (adminRefreshTimer) {
+
+        clearInterval(
+          adminRefreshTimer
+        );
+
+        adminRefreshTimer = null;
+      }
+
+    }
+
+
+    /*
+      وقتی مدیر از برنامه دیگری برمی‌گردد
+      یا صفحه دوباره قابل مشاهده می‌شود،
+      پنل فوراً تازه می‌شود.
+    */
+
+    document.addEventListener(
+      "visibilitychange",
+      async () => {
+
+        if (
+          document.visibilityState !== "visible"
+        ) {
+          return;
+        }
+
+
+        if (!currentUser) {
+          return;
+        }
+
+
+        if (
+          adminPanel.classList.contains(
+            "hidden"
+          )
+        ) {
+          return;
+        }
+
+
+        await loadAdminData();
+
+      }
+    );
+
+
+    /* =========================================================
        LOAD ADMIN DATA
     ========================================================= */
 
@@ -1936,10 +2049,16 @@
       }
 
 
-      adminUsers.innerHTML =
-        `<div class="admin-loading">
-          در حال دریافت اطلاعات...
-        </div>`;
+      /*
+        جلوگیری از درخواست‌های همزمان
+      */
+
+      if (isLoadingAdmin) {
+        return;
+      }
+
+
+      isLoadingAdmin = true;
 
 
       try {
@@ -1970,7 +2089,22 @@
         }
 
 
-        renderAdminData(data);
+        /*
+          اگر کاربر هنوز مدیر باشد
+          پنل را نگه می‌داریم.
+        */
+
+        if (
+          Array.isArray(data.users)
+        ) {
+
+          adminPanel.classList.remove(
+            "hidden"
+          );
+
+          renderAdminData(data);
+
+        }
 
 
       } catch (error) {
@@ -1980,10 +2114,19 @@
           error
         );
 
+        /*
+          خطای موقت شبکه باعث حذف پنل نمی‌شود.
+        */
+
         adminUsers.innerHTML =
           `<div class="admin-loading">
-            خطا در دریافت پنل مدیریت
+            دریافت اطلاعات ناموفق بود؛
+            دوباره تلاش می‌کنیم...
           </div>`;
+
+      } finally {
+
+        isLoadingAdmin = false;
       }
 
     }
@@ -2164,6 +2307,14 @@
                 button.dataset.approved !== "true";
 
 
+              /*
+                تا پایان درخواست
+                جلوی چند کلیک را می‌گیریم.
+              */
+
+              button.disabled = true;
+
+
               await setApproval(
                 userId,
                 approved
@@ -2215,7 +2366,16 @@
         }
 
 
+        /*
+          بعد از تغییر وضعیت،
+          پنل مدیر فوراً تازه شود.
+        */
+
         await loadAdminData();
+
+        /*
+          لیست کاربران عادی هم تازه شود.
+        */
 
         await loadUsers();
 
@@ -2231,6 +2391,7 @@
           error?.message ||
           "تغییر وضعیت کاربر انجام نشد."
         );
+
       }
 
     }
@@ -2311,6 +2472,12 @@
     async function logout() {
 
       stopApprovalWatcher();
+
+      /*
+        تایمر پنل مدیر هم حتماً متوقف شود.
+      */
+
+      stopAdminAutoRefresh();
 
 
       if (messageChannel) {
@@ -2400,25 +2567,17 @@
 
     adminRefreshBtn.addEventListener(
       "click",
-      loadAdminData
+      async () => {
+
+        await loadAdminData();
+
+      }
     );
 
 
     /* =========================================================
        AUTH STATE CHANGE
     ========================================================= */
-
-    /*
-      خیلی مهم:
-
-      اینجا دیگر برای SIGNED_IN، loadApp اجرا نمی‌کنیم.
-
-      چون در loginForm خودمان مستقیم loadApp
-      را اجرا کرده‌ایم.
-
-      این کار جلوی اجرای دوباره و گیر کردن
-      روی "در حال ورود..." را می‌گیرد.
-    */
 
     supabaseClient.auth.onAuthStateChange(
       async (event, session) => {
@@ -2432,6 +2591,8 @@
         if (event === "SIGNED_OUT") {
 
           stopApprovalWatcher();
+
+          stopAdminAutoRefresh();
 
           currentUser = null;
           currentProfile = null;
