@@ -1,46 +1,31 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
   <title>دوستانه</title>
 
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#2563eb">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="دوستانه">
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="manifest" href="./manifest.json" />
 
   <style>
     * {
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
     }
 
-    html,
     body {
       margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
       font-family: Tahoma, Arial, sans-serif;
-      background: #f4f7fb;
+      background: #f5f7fb;
       color: #172033;
     }
 
-    body {
-      overflow: hidden;
-    }
-
     button,
-    input,
-    textarea {
+    input {
       font-family: inherit;
     }
 
@@ -55,287 +40,236 @@
     /* AUTH */
 
     #authPage {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       padding: 20px;
-      background:
-        radial-gradient(circle at top right, #dbeafe 0%, transparent 35%),
-        radial-gradient(circle at bottom left, #e0e7ff 0%, transparent 35%),
-        #f4f7fb;
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
     }
 
-    .auth-card {
+    .auth-box {
       width: 100%;
       max-width: 420px;
-      background: rgba(255,255,255,.96);
+      background: white;
       border-radius: 24px;
       padding: 28px;
-      box-shadow: 0 15px 50px rgba(0,0,0,.10);
+      box-shadow: 0 20px 60px rgba(0,0,0,.18);
     }
 
     .logo {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 16px;
+      width: 70px;
+      height: 70px;
       border-radius: 22px;
-      background: linear-gradient(135deg,#2563eb,#7c3aed);
+      background: #2563eb;
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 34px;
-      font-weight: bold;
-      box-shadow: 0 12px 25px rgba(37,99,235,.25);
+      margin: 0 auto 18px;
+      font-size: 32px;
     }
 
     .auth-title {
       text-align: center;
-      margin: 0;
-      font-size: 27px;
+      margin: 0 0 8px;
+      font-size: 26px;
     }
 
     .auth-subtitle {
       text-align: center;
       color: #667085;
-      margin: 8px 0 25px;
+      margin-bottom: 25px;
       font-size: 14px;
     }
 
-    .input-group {
+    .field {
       margin-bottom: 14px;
     }
 
-    .input-group label {
+    .field label {
       display: block;
       margin-bottom: 7px;
       font-size: 13px;
       color: #475467;
     }
 
-    .input,
-    .textarea {
+    .field input {
       width: 100%;
-      border: 1px solid #d8dee9;
-      border-radius: 14px;
-      padding: 13px 14px;
+      height: 48px;
+      border: 1px solid #d0d5dd;
+      border-radius: 12px;
+      padding: 0 14px;
       outline: none;
-      background: #fff;
       font-size: 15px;
-      transition: .2s;
+      direction: rtl;
     }
 
-    .input:focus,
-    .textarea:focus {
+    .field input:focus {
       border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37,99,235,.10);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.1);
     }
 
     .primary-btn {
       width: 100%;
-      border: none;
-      border-radius: 14px;
-      padding: 14px;
+      height: 48px;
+      border: 0;
+      border-radius: 12px;
       background: #2563eb;
       color: white;
       font-size: 15px;
-      font-weight: bold;
       margin-top: 5px;
     }
 
-    .primary-btn:active {
-      transform: scale(.99);
+    .primary-btn:disabled {
+      opacity: .6;
     }
 
-    .secondary-btn {
+    .switch-btn {
       width: 100%;
-      border: none;
-      border-radius: 14px;
-      padding: 13px;
-      background: #eef2ff;
-      color: #3730a3;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    .text-btn {
-      border: none;
+      border: 0;
       background: transparent;
       color: #2563eb;
-      font-size: 13px;
-      padding: 10px 0;
+      margin-top: 15px;
+      font-size: 14px;
     }
 
     .auth-message {
       margin-top: 15px;
-      padding: 11px;
-      border-radius: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f2f4f7;
+      color: #475467;
       font-size: 13px;
+      line-height: 1.8;
       display: none;
     }
 
-    .auth-message.error {
+    .auth-message.show {
       display: block;
-      background: #fef2f2;
-      color: #b91c1c;
-    }
-
-    .auth-message.success {
-      display: block;
-      background: #f0fdf4;
-      color: #15803d;
     }
 
     /* APP */
 
     #appPage {
-      width: 100%;
-      height: 100%;
-      background: #f4f7fb;
+      min-height: 100vh;
     }
 
-    .app {
-      width: 100%;
-      height: 100%;
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .topbar {
-      height: 66px;
-      flex-shrink: 0;
+    .app-header {
+      height: 70px;
       background: white;
-      border-bottom: 1px solid #e7eaf0;
+      border-bottom: 1px solid #eaecf0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 0 18px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 22px;
       font-weight: bold;
-      font-size: 19px;
+      color: #2563eb;
     }
 
-    .brand-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: linear-gradient(135deg,#2563eb,#7c3aed);
-      color: white;
+    .header-actions {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      gap: 8px;
     }
 
     .icon-btn {
-      width: 40px;
-      height: 40px;
-      border: none;
-      background: #f3f5f9;
+      width: 42px;
+      height: 42px;
+      border: 0;
       border-radius: 12px;
-      font-size: 18px;
+      background: #f2f4f7;
+      font-size: 20px;
     }
 
-    .content {
-      flex: 1;
-      min-height: 0;
-      position: relative;
-    }
-
-    .page {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-    }
-
-    /* HOME */
-
-    .home-header {
-      padding: 20px 16px 10px;
+    .app-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 22px 16px;
     }
 
     .welcome {
-      font-size: 23px;
-      font-weight: bold;
-      margin-bottom: 5px;
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      color: white;
+      border-radius: 20px;
+      padding: 22px;
+      margin-bottom: 18px;
     }
 
-    .muted {
-      color: #667085;
-      font-size: 13px;
+    .welcome h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .welcome p {
+      margin: 0;
+      opacity: .9;
+      font-size: 14px;
     }
 
     .search-box {
-      padding: 10px 16px;
+      position: relative;
+      margin-bottom: 18px;
     }
 
-    .search-input {
+    .search-box input {
       width: 100%;
-      border: none;
-      outline: none;
+      height: 50px;
+      border: 1px solid #d0d5dd;
+      border-radius: 14px;
       background: white;
-      border-radius: 15px;
-      padding: 14px;
-      box-shadow: 0 2px 12px rgba(0,0,0,.04);
+      padding: 0 16px;
+      outline: none;
       font-size: 14px;
     }
 
     .section-title {
-      padding: 12px 16px 8px;
-      font-size: 14px;
+      font-size: 17px;
       font-weight: bold;
-      color: #475467;
+      margin-bottom: 12px;
     }
 
     .users-list {
-      padding: 0 10px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .user-item {
+    .user-card {
+      width: 100%;
+      border: 1px solid #eaecf0;
+      background: white;
+      border-radius: 16px;
+      padding: 12px;
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 13px 9px;
-      border-radius: 16px;
-      background: white;
-      margin-bottom: 8px;
-      cursor: pointer;
-      box-shadow: 0 2px 10px rgba(0,0,0,.025);
+      text-align: right;
     }
 
-    .user-item:active {
-      transform: scale(.995);
+    .user-card:hover {
+      background: #f9fafb;
     }
 
     .avatar {
       width: 48px;
       height: 48px;
-      flex-shrink: 0;
+      min-width: 48px;
       border-radius: 50%;
-      background: linear-gradient(135deg,#dbeafe,#ddd6fe);
-      color: #3730a3;
+      background: #2563eb;
+      color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
-      font-size: 18px;
       overflow: hidden;
+      font-size: 20px;
     }
 
     .avatar img {
@@ -345,232 +279,184 @@
     }
 
     .user-info {
-      flex: 1;
       min-width: 0;
+      flex: 1;
     }
 
     .user-name {
-      font-weight: bold;
       font-size: 15px;
-      margin-bottom: 5px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-date {
+      color: #98a2b3;
+      font-size: 11px;
+      margin-top: 5px;
     }
 
     .empty-state {
-      padding: 40px 20px;
+      background: white;
+      border-radius: 16px;
+      padding: 30px 15px;
       text-align: center;
-      color: #98a2b3;
+      color: #667085;
+      font-size: 14px;
+      line-height: 1.9;
     }
 
     /* PROFILE */
 
     .profile-page {
-      padding: 25px 16px;
-    }
-
-    .profile-card {
       background: white;
-      border-radius: 22px;
+      border-radius: 20px;
       padding: 25px;
-      text-align: center;
-      box-shadow: 0 3px 20px rgba(0,0,0,.05);
     }
 
     .profile-avatar {
       width: 90px;
       height: 90px;
-      margin: 0 auto 15px;
       border-radius: 50%;
-      background: linear-gradient(135deg,#2563eb,#7c3aed);
+      background: #2563eb;
       color: white;
+      margin: 0 auto 15px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      font-size: 32px;
-      font-weight: bold;
+      justify-content: center;
+      font-size: 34px;
+      overflow: hidden;
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .profile-name {
+      text-align: center;
       font-size: 20px;
       font-weight: bold;
+      margin-bottom: 8px;
     }
 
     .profile-email {
-      color: #667085;
-      margin-top: 6px;
-      font-size: 13px;
+      text-align: center;
+      color: #98a2b3;
+      font-size: 12px;
+      direction: ltr;
+      margin-bottom: 25px;
     }
 
     /* CHAT */
 
-    #chatPage {
-      position: absolute;
+    .chat-page {
+      position: fixed;
       inset: 0;
-      background: #eef2f7;
+      background: #f5f7fb;
+      z-index: 50;
       display: flex;
       flex-direction: column;
-      z-index: 20;
     }
 
     .chat-header {
-      height: 64px;
-      flex-shrink: 0;
+      height: 65px;
       background: white;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid #eaecf0;
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 0 10px;
-    }
-
-    .back-btn {
-      width: 40px;
-      height: 40px;
-      border: none;
-      background: #f3f4f6;
-      border-radius: 12px;
-      font-size: 20px;
-    }
-
-    .chat-user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .chat-user .avatar {
-      width: 42px;
-      height: 42px;
-    }
-
-    .chat-user-info {
-      min-width: 0;
+      padding: 0 12px;
     }
 
     .chat-user-name {
       font-weight: bold;
-      font-size: 15px;
     }
 
-    .chat-status {
-      font-size: 11px;
-      color: #98a2b3;
-      margin-top: 3px;
-    }
-
-    .messages {
+    .chat-messages {
       flex: 1;
       overflow-y: auto;
-      padding: 16px 12px;
+      padding: 18px 12px;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 8px;
     }
 
-    .message-row {
-      display: flex;
-      width: 100%;
-    }
-
-    .message-row.mine {
-      justify-content: flex-start;
-    }
-
-    .message-row.theirs {
-      justify-content: flex-end;
-    }
-
-    .message-bubble {
+    .message {
       max-width: 78%;
       padding: 10px 13px;
-      border-radius: 17px;
-      font-size: 14px;
+      border-radius: 15px;
       line-height: 1.7;
+      font-size: 14px;
       word-break: break-word;
-      white-space: pre-wrap;
-      position: relative;
     }
 
-    .mine .message-bubble {
+    .message.mine {
+      align-self: flex-start;
       background: #2563eb;
       color: white;
       border-bottom-left-radius: 5px;
     }
 
-    .theirs .message-bubble {
+    .message.theirs {
+      align-self: flex-end;
       background: white;
       color: #172033;
+      border: 1px solid #eaecf0;
       border-bottom-right-radius: 5px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.04);
-    }
-
-    .message-time {
-      font-size: 9px;
-      opacity: .7;
-      margin-top: 3px;
-      text-align: left;
     }
 
     .chat-input-area {
-      flex-shrink: 0;
       background: white;
-      border-top: 1px solid #e5e7eb;
-      padding: 9px;
+      border-top: 1px solid #eaecf0;
+      padding: 10px;
       display: flex;
-      align-items: flex-end;
       gap: 8px;
     }
 
-    .message-input {
+    .chat-input {
       flex: 1;
-      max-height: 110px;
-      min-height: 43px;
-      resize: none;
-      border: none;
+      height: 45px;
+      border: 1px solid #d0d5dd;
+      border-radius: 12px;
+      padding: 0 12px;
       outline: none;
-      background: #f3f4f6;
-      border-radius: 16px;
-      padding: 11px 13px;
-      font-size: 14px;
-      line-height: 1.5;
     }
 
     .send-btn {
-      width: 44px;
-      height: 44px;
-      flex-shrink: 0;
-      border: none;
-      border-radius: 14px;
+      width: 48px;
+      border: 0;
+      border-radius: 12px;
       background: #2563eb;
       color: white;
-      font-size: 19px;
-    }
-
-    .send-btn:disabled {
-      opacity: .5;
+      font-size: 18px;
     }
 
     /* LOADING */
 
-    #loading {
-      position: fixed;
-      inset: 0;
-      background: rgba(255,255,255,.95);
-      z-index: 9999;
+    #loadingPage {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-      gap: 12px;
+      background: #f5f7fb;
     }
 
-    .loader {
+    .loading-box {
+      text-align: center;
+      color: #667085;
+    }
+
+    .spinner {
       width: 38px;
       height: 38px;
-      border: 4px solid #e5e7eb;
+      border: 4px solid #dbeafe;
       border-top-color: #2563eb;
       border-radius: 50%;
       animation: spin .8s linear infinite;
+      margin: 0 auto 15px;
     }
 
     @keyframes spin {
@@ -579,26 +465,9 @@
       }
     }
 
-    /* DESKTOP */
-
-    @media (min-width: 800px) {
-
-      .app {
-        box-shadow: 0 0 40px rgba(0,0,0,.06);
-        background: #f4f7fb;
-      }
-
-      .users-list {
-        max-width: 700px;
-        margin: auto;
-      }
-
-      .home-header,
-      .search-box,
-      .section-title {
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
+    @media (min-width: 700px) {
+      .app-container {
+        padding-top: 30px;
       }
     }
   </style>
@@ -606,247 +475,153 @@
 
 <body>
 
-<div id="loading">
-  <div class="loader"></div>
-  <div>در حال آماده‌سازی دوستانه...</div>
-</div>
+  <!-- LOADING -->
 
-
-<!-- AUTH -->
-
-<div id="authPage" class="hidden">
-
-  <div class="auth-card">
-
-    <div class="logo">د</div>
-
-    <h1 class="auth-title">دوستانه</h1>
-
-    <div class="auth-subtitle">
-      یک جای ساده برای گفتگو با دوستان
+  <div id="loadingPage">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <div>در حال بارگذاری...</div>
     </div>
+  </div>
 
 
-    <!-- LOGIN -->
+  <!-- AUTH -->
 
-    <div id="loginForm">
+  <div id="authPage" class="hidden">
 
-      <div class="input-group">
-        <label>ایمیل</label>
+    <div class="auth-box">
 
-        <input
-          id="loginEmail"
-          class="input"
-          type="email"
-          placeholder="ایمیل خود را وارد کنید"
-          autocomplete="email"
+      <div class="logo">👥</div>
+
+      <h1 class="auth-title">دوستانه</h1>
+
+      <div class="auth-subtitle">
+        با دوستانت در ارتباط باش
+      </div>
+
+      <!-- LOGIN -->
+
+      <div id="loginForm">
+
+        <div class="field">
+          <label>ایمیل</label>
+          <input
+            id="loginEmail"
+            type="email"
+            autocomplete="email"
+            placeholder="ایمیل خود را وارد کنید"
+          />
+        </div>
+
+        <div class="field">
+          <label>رمز عبور</label>
+          <input
+            id="loginPassword"
+            type="password"
+            autocomplete="current-password"
+            placeholder="رمز عبور"
+          />
+        </div>
+
+        <button
+          id="loginBtn"
+          class="primary-btn"
         >
+          ورود
+        </button>
+
+        <button
+          id="showSignupBtn"
+          class="switch-btn"
+        >
+          حساب ندارم؛ ثبت‌نام می‌کنم
+        </button>
+
       </div>
 
 
-      <div class="input-group">
-        <label>رمز عبور</label>
+      <!-- SIGNUP -->
 
-        <input
-          id="loginPassword"
-          class="input"
-          type="password"
-          placeholder="رمز عبور"
-          autocomplete="current-password"
+      <div id="signupForm" class="hidden">
+
+        <div class="field">
+          <label>نام نمایشی</label>
+          <input
+            id="signupName"
+            type="text"
+            placeholder="مثلاً صابر"
+          />
+        </div>
+
+        <div class="field">
+          <label>ایمیل</label>
+          <input
+            id="signupEmail"
+            type="email"
+            autocomplete="email"
+            placeholder="ایمیل"
+          />
+        </div>
+
+        <div class="field">
+          <label>رمز عبور</label>
+          <input
+            id="signupPassword"
+            type="password"
+            autocomplete="new-password"
+            placeholder="حداقل ۶ کاراکتر"
+          />
+        </div>
+
+        <button
+          id="signupBtn"
+          class="primary-btn"
         >
+          ثبت‌نام
+        </button>
+
+        <button
+          id="showLoginBtn"
+          class="switch-btn"
+        >
+          قبلاً ثبت‌نام کرده‌ام
+        </button>
+
       </div>
 
-
-      <button
-        class="primary-btn"
-        onclick="login()"
-      >
-        ورود
-      </button>
-
-
-      <button
-        class="text-btn"
-        onclick="showSignup()"
-      >
-        حساب ندارم؛ ثبت‌نام می‌کنم
-      </button>
-
-      <br>
-
-      <button
-        class="text-btn"
-        onclick="showForgotPassword()"
-      >
-        رمز عبورم را فراموش کرده‌ام
-      </button>
-
-    </div>
-
-
-    <!-- SIGNUP -->
-
-    <div id="signupForm" class="hidden">
-
-      <div class="input-group">
-        <label>نام شما</label>
-
-        <input
-          id="signupName"
-          class="input"
-          type="text"
-          placeholder="مثلاً صابر"
-          autocomplete="name"
-        >
-      </div>
-
-
-      <div class="input-group">
-        <label>ایمیل</label>
-
-        <input
-          id="signupEmail"
-          class="input"
-          type="email"
-          placeholder="ایمیل"
-          autocomplete="email"
-        >
-      </div>
-
-
-      <div class="input-group">
-        <label>رمز عبور</label>
-
-        <input
-          id="signupPassword"
-          class="input"
-          type="password"
-          placeholder="حداقل ۶ کاراکتر"
-          autocomplete="new-password"
-        >
-      </div>
-
-
-      <button
-        class="primary-btn"
-        onclick="signup()"
-      >
-        ساخت حساب
-      </button>
-
-
-      <button
-        class="text-btn"
-        onclick="showLogin()"
-      >
-        قبلاً حساب دارم
-      </button>
+      <div
+        id="authMessage"
+        class="auth-message"
+      ></div>
 
     </div>
-
-
-    <!-- FORGOT PASSWORD -->
-
-    <div id="forgotForm" class="hidden">
-
-      <div class="input-group">
-        <label>ایمیل حساب</label>
-
-        <input
-          id="forgotEmail"
-          class="input"
-          type="email"
-          placeholder="ایمیل"
-        >
-      </div>
-
-
-      <button
-        class="primary-btn"
-        onclick="forgotPassword()"
-      >
-        ارسال لینک بازیابی
-      </button>
-
-
-      <button
-        class="text-btn"
-        onclick="showLogin()"
-      >
-        برگشت به ورود
-      </button>
-
-    </div>
-
-
-    <!-- RESET PASSWORD -->
-
-    <div id="resetForm" class="hidden">
-
-      <div class="input-group">
-        <label>رمز عبور جدید</label>
-
-        <input
-          id="newPassword"
-          class="input"
-          type="password"
-          placeholder="رمز عبور جدید"
-        >
-      </div>
-
-
-      <button
-        class="primary-btn"
-        onclick="updatePassword()"
-      >
-        ذخیره رمز جدید
-      </button>
-
-    </div>
-
-
-    <div id="authMessage" class="auth-message"></div>
 
   </div>
 
-</div>
 
+  <!-- APP -->
 
-<!-- APP -->
+  <div id="appPage" class="hidden">
 
-<div id="appPage" class="hidden">
-
-  <div class="app">
-
-    <div class="topbar">
+    <header class="app-header">
 
       <div class="brand">
-
-        <div class="brand-icon">
-          د
-        </div>
-
-        <span>
-          دوستانه
-        </span>
-
+        دوستانه
       </div>
 
-
-      <div class="top-actions">
+      <div class="header-actions">
 
         <button
+          id="profileBtn"
           class="icon-btn"
-          onclick="showProfile()"
           title="پروفایل"
         >
           👤
         </button>
 
-
         <button
+          id="logoutBtn"
           class="icon-btn"
-          onclick="logout()"
           title="خروج"
         >
           ⎋
@@ -854,28 +629,24 @@
 
       </div>
 
-    </div>
+    </header>
 
 
-    <div class="content">
+    <main class="app-container">
 
       <!-- HOME -->
 
-      <div id="homePage" class="page">
+      <section id="homePage">
 
-        <div class="home-header">
+        <div class="welcome">
 
-          <div
-            id="welcomeText"
-            class="welcome"
-          >
+          <h2 id="welcomeText">
             سلام 👋
-          </div>
+          </h2>
 
-
-          <div class="muted">
+          <p>
             دوستانت رو پیدا کن و گفتگو رو شروع کن
-          </div>
+          </p>
 
         </div>
 
@@ -884,11 +655,10 @@
 
           <input
             id="searchInput"
-            class="search-input"
-            type="text"
+            type="search"
             placeholder="جستجوی کاربران..."
-            oninput="searchUsers()"
-          >
+            autocomplete="off"
+          />
 
         </div>
 
@@ -909,763 +679,276 @@
 
         </div>
 
-      </div>
+      </section>
 
 
       <!-- PROFILE -->
 
-      <div
+      <section
         id="profilePage"
-        class="page hidden"
+        class="hidden"
       >
 
         <div class="profile-page">
 
-          <div class="profile-card">
+          <div
+            id="profileAvatar"
+            class="profile-avatar"
+          >
+            👤
+          </div>
 
-            <div
-              id="profileAvatar"
-              class="profile-avatar"
-            >
-              د
-            </div>
+          <div
+            id="profileName"
+            class="profile-name"
+          >
+            -
+          </div>
 
+          <div
+            id="profileEmail"
+            class="profile-email"
+          >
+            -
+          </div>
 
-            <div
-              id="profileName"
-              class="profile-name"
-            >
-              -
-            </div>
+          <div class="field">
 
+            <label>
+              نام نمایشی
+            </label>
 
-            <div
-              id="profileEmail"
-              class="profile-email"
-            >
-              -
-            </div>
-
-
-            <br>
-
-
-            <button
-              class="secondary-btn"
-              onclick="showHome()"
-            >
-              برگشت به صفحه اصلی
-            </button>
+            <input
+              id="editDisplayName"
+              type="text"
+              placeholder="نام نمایشی"
+            />
 
           </div>
 
+          <button
+            id="saveProfileBtn"
+            class="primary-btn"
+          >
+            ذخیره تغییرات
+          </button>
+
+          <button
+            id="backHomeBtn"
+            class="switch-btn"
+          >
+            بازگشت
+          </button>
+
         </div>
 
-      </div>
+      </section>
+
+    </main>
+
+  </div>
 
 
-      <!-- CHAT -->
+  <!-- CHAT -->
+
+  <div
+    id="chatPage"
+    class="chat-page hidden"
+  >
+
+    <div class="chat-header">
+
+      <button
+        id="closeChatBtn"
+        class="icon-btn"
+      >
+        → 
+      </button>
 
       <div
-        id="chatPage"
-        class="hidden"
+        id="chatAvatar"
+        class="avatar"
       >
-
-        <div class="chat-header">
-
-          <button
-            class="back-btn"
-            onclick="closeChat()"
-          >
-            →
-          </button>
-
-
-          <div class="chat-user">
-
-            <div
-              id="chatAvatar"
-              class="avatar"
-            >
-              د
-            </div>
-
-
-            <div class="chat-user-info">
-
-              <div
-                id="chatUserName"
-                class="chat-user-name"
-              >
-                -
-              </div>
-
-
-              <div class="chat-status">
-                گفتگو
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div
-          id="messages"
-          class="messages"
-        >
-
-          <div class="empty-state">
-            هنوز پیامی وجود ندارد
-          </div>
-
-        </div>
-
-
-        <div class="chat-input-area">
-
-          <textarea
-            id="messageInput"
-            class="message-input"
-            placeholder="پیامت رو بنویس..."
-            rows="1"
-            onkeydown="handleMessageKey(event)"
-          ></textarea>
-
-
-          <button
-            id="sendButton"
-            class="send-btn"
-            onclick="sendMessage()"
-          >
-            ➤
-          </button>
-
-        </div>
-
+        👤
       </div>
+
+      <div
+        id="chatUserName"
+        class="chat-user-name"
+      >
+        گفتگو
+      </div>
+
+    </div>
+
+
+    <div
+      id="chatMessages"
+      class="chat-messages"
+    >
+    </div>
+
+
+    <div class="chat-input-area">
+
+      <input
+        id="chatInput"
+        class="chat-input"
+        type="text"
+        placeholder="پیامت رو بنویس..."
+        autocomplete="off"
+      />
+
+      <button
+        id="sendBtn"
+        class="send-btn"
+      >
+        ➤
+      </button>
 
     </div>
 
   </div>
 
-</div>
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://uobviepglysngosuomph.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_ki1URRpDpSc-E5h5HQiq3w_2_-LHIHa";
 
 
-<script>
-
-  /* =========================================================
-     SUPABASE
-  ========================================================= */
-
-  const SUPABASE_URL =
-    "https://uobviepglysngosuomph.supabase.co";
-
-  const SUPABASE_KEY =
-    "sb_publishable_ki1URRpDpSc-E5h5HQiq3w_2_-LHIHa";
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
 
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+    const $ = id =>
+      document.getElementById(id);
 
 
-  /* =========================================================
-     GLOBAL STATE
-  ========================================================= */
+    let currentUser = null;
+    let currentProfile = null;
 
-  let currentUser = null;
+    let allUsers = [];
 
-  let currentProfile = null;
+    let currentChatUser = null;
 
-  let allUsers = [];
-
-  let selectedUser = null;
-
-  let messagesChannel = null;
+    let realtimeChannel = null;
 
 
-  /* =========================================================
-     HELPERS
-  ========================================================= */
+    function escapeHtml(value) {
 
-  function $(id) {
-    return document.getElementById(id);
-  }
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
 
 
-  function escapeHtml(value) {
+    function showAuthMessage(message) {
 
-    if (
-      value === null ||
-      value === undefined
+      const box = $("authMessage");
+
+      box.textContent = message;
+
+      box.classList.add("show");
+
+    }
+
+
+    function hideAuthMessage() {
+
+      $("authMessage")
+        .classList.remove("show");
+
+    }
+
+
+    function showAuth() {
+
+      $("loadingPage")
+        .classList.add("hidden");
+
+      $("appPage")
+        .classList.add("hidden");
+
+      $("authPage")
+        .classList.remove("hidden");
+
+    }
+
+
+    function showApp() {
+
+      $("loadingPage")
+        .classList.add("hidden");
+
+      $("authPage")
+        .classList.add("hidden");
+
+      $("appPage")
+        .classList.remove("hidden");
+
+    }
+
+
+    async function createProfile(
+      user,
+      displayName
     ) {
-      return "";
-    }
 
+      const name =
+        String(displayName || "")
+          .trim();
 
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-
-  }
-
-
-  function getInitial(name) {
-
-    const text =
-      String(name || "د").trim();
-
-    return (
-      text.charAt(0) ||
-      "د"
-    );
-
-  }
-
-
-  function formatTime(dateString) {
-
-    const date =
-      new Date(dateString);
-
-    return date.toLocaleTimeString(
-      "fa-IR",
-      {
-        hour: "2-digit",
-        minute: "2-digit"
-      }
-    );
-
-  }
-
-
-  function showAuthMessage(
-    message,
-    type = "error"
-  ) {
-
-    const box =
-      $("authMessage");
-
-    box.textContent =
-      message;
-
-    box.className =
-      "auth-message " + type;
-
-  }
-
-
-  function clearAuthMessage() {
-
-    const box =
-      $("authMessage");
-
-    box.textContent =
-      "";
-
-    box.className =
-      "auth-message";
-
-  }
-
-
-  /* =========================================================
-     AUTH FORMS
-  ========================================================= */
-
-  function hideAllAuthForms() {
-
-    $("loginForm")
-      .classList
-      .add("hidden");
-
-    $("signupForm")
-      .classList
-      .add("hidden");
-
-    $("forgotForm")
-      .classList
-      .add("hidden");
-
-    $("resetForm")
-      .classList
-      .add("hidden");
-
-    clearAuthMessage();
-
-  }
-
-
-  function showLogin() {
-
-    hideAllAuthForms();
-
-    $("loginForm")
-      .classList
-      .remove("hidden");
-
-  }
-
-
-  function showSignup() {
-
-    hideAllAuthForms();
-
-    $("signupForm")
-      .classList
-      .remove("hidden");
-
-  }
-
-
-  function showForgotPassword() {
-
-    hideAllAuthForms();
-
-    $("forgotForm")
-      .classList
-      .remove("hidden");
-
-  }
-
-
-  function showResetPassword() {
-
-    hideAllAuthForms();
-
-    $("resetForm")
-      .classList
-      .remove("hidden");
-
-  }
-
-
-  /* =========================================================
-     CREATE PROFILE
-  ========================================================= */
-
-  async function createProfile(
-    user,
-    displayName
-  ) {
-
-    const name =
-      String(displayName || "")
-        .trim();
-
-
-    const { error } =
-      await supabaseClient
-        .from("profiles")
-        .upsert(
-          {
-            id: user.id,
-            display_name: name
-          },
-          {
-            onConflict: "id"
-          }
-        );
-
-
-    if (error) {
-
-      console.error(
-        "PROFILE ERROR:",
+      const {
         error
-      );
-
-    }
-
-  }
-
-
-  /* =========================================================
-     SIGN UP
-  ========================================================= */
-
-  async function signup() {
-
-    clearAuthMessage();
-
-
-    const name =
-      $("signupName")
-        .value
-        .trim();
-
-
-    const email =
-      $("signupEmail")
-        .value
-        .trim();
-
-
-    const password =
-      $("signupPassword")
-        .value;
-
-
-    if (!name) {
-
-      showAuthMessage(
-        "لطفاً نامت رو وارد کن."
-      );
-
-      return;
-    }
-
-
-    if (!email) {
-
-      showAuthMessage(
-        "لطفاً ایمیل رو وارد کن."
-      );
-
-      return;
-    }
-
-
-    if (password.length < 6) {
-
-      showAuthMessage(
-        "رمز عبور باید حداقل ۶ کاراکتر باشه."
-      );
-
-      return;
-    }
-
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.auth.signUp(
-        {
-          email,
-          password,
-          options: {
-            data: {
+      } =
+        await supabaseClient
+          .from("profiles")
+          .upsert(
+            {
+              id: user.id,
               display_name: name
+            },
+            {
+              onConflict: "id"
             }
-          }
-        }
-      );
+          );
 
+      if (error) {
 
-    if (error) {
-
-      console.error(error);
-
-      showAuthMessage(
-        error.message
-      );
-
-      return;
-    }
-
-
-    if (data.user) {
-
-      await createProfile(
-        data.user,
-        name
-      );
-
-    }
-
-
-    if (data.session) {
-
-      showAuthMessage(
-        "حساب ساخته شد. در انتظار تأیید مدیر هستید.",
-        "success"
-      );
-
-      await loadApp();
-
-    } else {
-
-      showAuthMessage(
-        "حساب ساخته شد. ایمیلت رو تأیید کن و بعد وارد شو.",
-        "success"
-      );
-
-      showLogin();
-
-    }
-
-  }
-
-
-  /* =========================================================
-     LOGIN
-  ========================================================= */
-
-  async function login() {
-
-    clearAuthMessage();
-
-
-    const email =
-      $("loginEmail")
-        .value
-        .trim();
-
-
-    const password =
-      $("loginPassword")
-        .value;
-
-
-    if (
-      !email ||
-      !password
-    ) {
-
-      showAuthMessage(
-        "ایمیل و رمز عبور رو وارد کن."
-      );
-
-      return;
-    }
-
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.auth
-        .signInWithPassword(
-          {
-            email,
-            password
-          }
+        console.error(
+          "PROFILE ERROR:",
+          error
         );
 
-
-    if (error) {
-
-      console.error(error);
-
-      showAuthMessage(
-        error.message
-      );
-
-      return;
-    }
-
-
-    currentUser =
-      data.user;
-
-
-    await loadApp();
-
-  }
-
-
-  /* =========================================================
-     FORGOT PASSWORD
-  ========================================================= */
-
-  async function forgotPassword() {
-
-    clearAuthMessage();
-
-
-    const email =
-      $("forgotEmail")
-        .value
-        .trim();
-
-
-    if (!email) {
-
-      showAuthMessage(
-        "ایمیل رو وارد کن."
-      );
-
-      return;
-    }
-
-
-    const redirectTo =
-      window.location.origin +
-      window.location.pathname;
-
-
-    const {
-      error
-    } =
-      await supabaseClient.auth
-        .resetPasswordForEmail(
-          email,
-          {
-            redirectTo
-          }
-        );
-
-
-    if (error) {
-
-      showAuthMessage(
-        error.message
-      );
-
-      return;
-    }
-
-
-    showAuthMessage(
-      "لینک بازیابی رمز عبور به ایمیلت ارسال شد.",
-      "success"
-    );
-
-  }
-
-
-  /* =========================================================
-     UPDATE PASSWORD
-  ========================================================= */
-
-  async function updatePassword() {
-
-    const password =
-      $("newPassword")
-        .value;
-
-
-    if (password.length < 6) {
-
-      showAuthMessage(
-        "رمز عبور باید حداقل ۶ کاراکتر باشه."
-      );
-
-      return;
-    }
-
-
-    const {
-      error
-    } =
-      await supabaseClient.auth
-        .updateUser(
-          {
-            password
-          }
-        );
-
-
-    if (error) {
-
-      showAuthMessage(
-        error.message
-      );
-
-      return;
-    }
-
-
-    showAuthMessage(
-      "رمز عبور با موفقیت تغییر کرد.",
-      "success"
-    );
-
-
-    setTimeout(
-      () => showLogin(),
-      1500
-    );
-
-  }
-
-
-  /* =========================================================
-     LOAD APP
-  ========================================================= */
-
-  async function loadApp() {
-
-    const {
-      data: {
-        user
       }
-    } =
-      await supabaseClient.auth
-        .getUser();
 
-
-    if (!user) {
-
-      showAuthPage();
-
-      return;
     }
 
 
-    currentUser =
-      user;
+    async function loadApp(user) {
+
+      currentUser = user;
 
 
-    /*
-      فقط اطلاعات عمومی پروفایل
-      خوانده می‌شود.
-    */
-
-    const {
-      data: profile,
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id,display_name,avatar_url,created_at,updated_at,approved"
-        )
-        .eq(
-          "id",
-          user.id
-        )
-        .maybeSingle();
-
-
-    if (error) {
-
-      console.error(
-        "PROFILE LOAD ERROR:",
+      const {
+        data: profile,
         error
-      );
-
-      showAuthMessage(
-        "خطا در دریافت اطلاعات حساب."
-      );
-
-      return;
-    }
-
-
-    /*
-      اگر پروفایل وجود نداشت،
-      تلاش می‌کنیم آن را بسازیم.
-    */
-
-    if (!profile) {
-
-      await createProfile(
-        user,
-        user.user_metadata?.display_name || ""
-      );
-
-      const result =
+      } =
         await supabaseClient
           .from("profiles")
           .select(
@@ -1677,1170 +960,1278 @@
           )
           .maybeSingle();
 
-      currentProfile =
-        result.data || {
-          id: user.id,
-          display_name:
-            user.user_metadata?.display_name ||
-            "کاربر"
-        };
 
-    } else {
+      if (error) {
 
-      currentProfile =
-        profile;
+        console.error(
+          "PROFILE LOAD ERROR:",
+          error
+        );
 
-    }
+        showAuth();
 
+        showAuthMessage(
+          "خطا در دریافت اطلاعات حساب."
+        );
 
-    /*
-      بررسی تأیید مدیر
-    */
+        return;
 
-    if (
-      !currentProfile.approved
-    ) {
-
-      $("appPage")
-        .classList
-        .add("hidden");
-
-      $("authPage")
-        .classList
-        .remove("hidden");
-
-      showLogin();
-
-      showAuthMessage(
-        "حساب شما هنوز توسط مدیر تأیید نشده است.",
-        "error"
-      );
-
-      return;
-    }
+      }
 
 
-    $("welcomeText").textContent =
-      "سلام " +
-      (
-        currentProfile.display_name ||
-        "دوست من"
-      ) +
-      " 👋";
+      if (!profile) {
 
-
-    $("authPage")
-      .classList
-      .add("hidden");
-
-
-    $("appPage")
-      .classList
-      .remove("hidden");
-
-
-    showHome();
-
-
-    await loadUsers();
-
-  }
-
-
-  /* =========================================================
-     AUTH PAGE
-  ========================================================= */
-
-  function showAuthPage() {
-
-    $("appPage")
-      .classList
-      .add("hidden");
-
-
-    $("authPage")
-      .classList
-      .remove("hidden");
-
-  }
-
-
-  /* =========================================================
-     LOAD USERS
-  ========================================================= */
-
-  async function loadUsers() {
-
-    if (!currentUser) {
-      return;
-    }
-
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .select(
-          "id,display_name,avatar_url,created_at"
-        )
-        .neq(
-          "id",
-          currentUser.id
-        )
-        .eq(
-          "approved",
-          true
-        )
-        .order(
-          "display_name",
-          {
-            ascending: true
-          }
+        await createProfile(
+          user,
+          user.user_metadata?.display_name ||
+          ""
         );
 
 
-    if (error) {
+        const result =
+          await supabaseClient
+            .from("profiles")
+            .select(
+              "id,display_name,avatar_url,created_at,updated_at,approved"
+            )
+            .eq(
+              "id",
+              user.id
+            )
+            .maybeSingle();
 
-      console.error(
-        "USERS LOAD ERROR:",
+
+        if (result.error) {
+
+          console.error(
+            "PROFILE CREATE ERROR:",
+            result.error
+          );
+
+          showAuth();
+
+          showAuthMessage(
+            "خطا در ساخت پروفایل."
+          );
+
+          return;
+
+        }
+
+
+        currentProfile =
+          result.data;
+
+      } else {
+
+        currentProfile =
+          profile;
+
+      }
+
+
+      /*
+        کاربر ثبت‌نام کرده ولی هنوز مدیر تأیید نکرده
+      */
+
+      if (
+        !currentProfile ||
+        currentProfile.approved !== true
+      ) {
+
+        await supabaseClient.auth.signOut();
+
+        showAuth();
+
+        showAuthMessage(
+          "ثبت‌نام شما انجام شده است. برای ورود به دوستانه باید توسط مدیر تأیید شوید."
+        );
+
+        return;
+
+      }
+
+
+      showApp();
+
+
+      $("welcomeText").textContent =
+        "سلام " +
+        (
+          currentProfile.display_name ||
+          "دوست من"
+        ) +
+        " 👋";
+
+
+      await loadUsers();
+
+    }
+
+
+    async function loadUsers() {
+
+      /*
+        عمداً approved را از SELECT نخوانده‌ایم.
+        RLS دیتابیس خودش کاربران مجاز را نمایش می‌دهد.
+      */
+
+      const {
+        data,
         error
-      );
+      } =
+        await supabaseClient
+          .from("profiles")
+          .select(
+            "id,display_name,avatar_url,created_at"
+          )
+          .neq(
+            "id",
+            currentUser.id
+          )
+          .order(
+            "display_name",
+            {
+              ascending: true
+            }
+          );
 
 
-      $("usersList").innerHTML =
-        `
-        <div class="empty-state">
-          خطا در دریافت کاربران
-        </div>
-        `;
+      if (error) {
+
+        console.error(
+          "USERS LOAD ERROR:",
+          error
+        );
+
+        $("usersList").innerHTML =
+          `
+          <div class="empty-state">
+            <b>خطا در دریافت کاربران</b>
+            <br><br>
+            لطفاً صفحه را دوباره باز کنید.
+          </div>
+          `;
+
+        return;
+
+      }
 
 
-      return;
-    }
+      allUsers =
+        data || [];
 
-
-    allUsers =
-      data || [];
-
-
-    renderUsers(
-      allUsers
-    );
-
-  }
-
-
-  /* =========================================================
-     RENDER USERS
-  ========================================================= */
-
-  function renderUsers(users) {
-
-    const list =
-      $("usersList");
-
-
-    if (!users.length) {
-
-      list.innerHTML =
-        `
-        <div class="empty-state">
-          کاربر دیگری پیدا نشد.
-        </div>
-        `;
-
-
-      return;
-    }
-
-
-    list.innerHTML =
-      users
-        .map(
-          user => {
-
-            const name =
-              user.display_name ||
-              "کاربر";
-
-
-            const avatar =
-              user.avatar_url
-                ?
-                `
-                <img
-                  src="${escapeHtml(user.avatar_url)}"
-                  alt=""
-                >
-                `
-                :
-                escapeHtml(
-                  getInitial(name)
-                );
-
-
-            return `
-              <div
-                class="user-item"
-                onclick="openChat('${escapeHtml(user.id)}')"
-              >
-
-                <div class="avatar">
-                  ${avatar}
-                </div>
-
-
-                <div class="user-info">
-
-                  <div class="user-name">
-                    ${escapeHtml(name)}
-                  </div>
-
-                </div>
-
-              </div>
-            `;
-
-          }
-        )
-        .join("");
-
-  }
-
-
-  /* =========================================================
-     SEARCH USERS
-  ========================================================= */
-
-  function searchUsers() {
-
-    const value =
-      $("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    if (!value) {
 
       renderUsers(
         allUsers
       );
 
-      return;
     }
 
 
-    const filtered =
-      allUsers.filter(
-        user => {
+    function renderUsers(
+      users
+    ) {
 
-          const name =
+      const list =
+        $("usersList");
+
+
+      if (!users.length) {
+
+        list.innerHTML =
+          `
+          <div class="empty-state">
+            هنوز کاربر دیگری برای نمایش وجود ندارد.
+          </div>
+          `;
+
+        return;
+
+      }
+
+
+      list.innerHTML =
+        users
+          .map(
+            user => {
+
+              const name =
+                user.display_name ||
+                "کاربر";
+
+
+              const firstLetter =
+                escapeHtml(
+                  name.charAt(0)
+                );
+
+
+              const avatar =
+                user.avatar_url
+                  ?
+                  `
+                  <img
+                    src="${escapeHtml(user.avatar_url)}"
+                    alt=""
+                  >
+                  `
+                  :
+                  firstLetter;
+
+
+              const date =
+                user.created_at
+                  ?
+                  new Date(
+                    user.created_at
+                  ).toLocaleDateString(
+                    "fa-IR"
+                  )
+                  :
+                  "";
+
+
+              return `
+                <button
+                  class="user-card"
+                  onclick="openChat('${user.id}')"
+                >
+
+                  <div class="avatar">
+                    ${avatar}
+                  </div>
+
+                  <div class="user-info">
+
+                    <div class="user-name">
+                      ${escapeHtml(name)}
+                    </div>
+
+                    <div class="user-date">
+                      عضو از ${escapeHtml(date)}
+                    </div>
+
+                  </div>
+
+                </button>
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+
+    function searchUsers() {
+
+      const query =
+        String(
+          $("searchInput").value || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+      if (!query) {
+
+        renderUsers(
+          allUsers
+        );
+
+        return;
+
+      }
+
+
+      const filtered =
+        allUsers.filter(
+          user =>
             String(
               user.display_name || ""
             )
-            .toLowerCase();
-
-
-          return name.includes(
-            value
-          );
-
-        }
-      );
-
-
-    renderUsers(
-      filtered
-    );
-
-  }
-
-
-  /* =========================================================
-     HOME
-  ========================================================= */
-
-  function showHome() {
-
-    stopMessagesRealtime();
-
-
-    $("homePage")
-      .classList
-      .remove("hidden");
-
-
-    $("profilePage")
-      .classList
-      .add("hidden");
-
-
-    $("chatPage")
-      .classList
-      .add("hidden");
-
-  }
-
-
-  /* =========================================================
-     PROFILE
-  ========================================================= */
-
-  function showProfile() {
-
-    stopMessagesRealtime();
-
-
-    $("homePage")
-      .classList
-      .add("hidden");
-
-
-    $("chatPage")
-      .classList
-      .add("hidden");
-
-
-    $("profilePage")
-      .classList
-      .remove("hidden");
-
-
-    const name =
-      currentProfile?.display_name ||
-      "کاربر";
-
-
-    $("profileName").textContent =
-      name;
-
-
-    /*
-      ایمیل فقط از Auth خود کاربر گرفته می‌شود.
-      ایمیل سایر کاربران هرگز خوانده نمی‌شود.
-    */
-
-    $("profileEmail").textContent =
-      currentUser?.email ||
-      "";
-
-
-    $("profileAvatar").textContent =
-      getInitial(name);
-
-  }
-
-
-  /* =========================================================
-     OPEN CHAT
-  ========================================================= */
-
-  async function openChat(userId) {
-
-    const user =
-      allUsers.find(
-        item =>
-          item.id === userId
-      );
-
-
-    if (!user) {
-      return;
-    }
-
-
-    selectedUser =
-      user;
-
-
-    $("homePage")
-      .classList
-      .add("hidden");
-
-
-    $("profilePage")
-      .classList
-      .add("hidden");
-
-
-    $("chatPage")
-      .classList
-      .remove("hidden");
-
-
-    const name =
-      user.display_name ||
-      "کاربر";
-
-
-    $("chatUserName").textContent =
-      name;
-
-
-    if (user.avatar_url) {
-
-      $("chatAvatar").innerHTML =
-        `
-        <img
-          src="${escapeHtml(user.avatar_url)}"
-          alt=""
-        >
-        `;
-
-    } else {
-
-      $("chatAvatar").textContent =
-        getInitial(name);
-
-    }
-
-
-    $("messages").innerHTML =
-      `
-      <div class="empty-state">
-        در حال بارگذاری...
-      </div>
-      `;
-
-
-    await loadMessages();
-
-
-    startMessagesRealtime();
-
-  }
-
-
-  /* =========================================================
-     CLOSE CHAT
-  ========================================================= */
-
-  function closeChat() {
-
-    stopMessagesRealtime();
-
-
-    selectedUser =
-      null;
-
-
-    $("chatPage")
-      .classList
-      .add("hidden");
-
-
-    $("homePage")
-      .classList
-      .remove("hidden");
-
-  }
-
-
-  /* =========================================================
-     LOAD MESSAGES
-  ========================================================= */
-
-  async function loadMessages() {
-
-    if (
-      !currentUser ||
-      !selectedUser
-    ) {
-      return;
-    }
-
-
-    const myId =
-      currentUser.id;
-
-
-    const otherId =
-      selectedUser.id;
-
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("messages")
-        .select(
-          "id,sender_id,receiver_id,content,created_at"
-        )
-        .or(
-          `and(sender_id.eq.${myId},receiver_id.eq.${otherId}),and(sender_id.eq.${otherId},receiver_id.eq.${myId})`
-        )
-        .order(
-          "created_at",
-          {
-            ascending: true
-          }
+            .toLowerCase()
+            .includes(query)
         );
 
 
-    if (error) {
-
-      console.error(
-        "MESSAGES LOAD ERROR:",
-        error
+      renderUsers(
+        filtered
       );
 
-
-      $("messages").innerHTML =
-        `
-        <div class="empty-state">
-          خطا در دریافت پیام‌ها
-        </div>
-        `;
-
-
-      return;
     }
 
 
-    const messages =
-      data || [];
+    function showProfile() {
+
+      $("homePage")
+        .classList.add("hidden");
+
+      $("profilePage")
+        .classList.remove("hidden");
 
 
-    if (!messages.length) {
+      $("profileName").textContent =
+        currentProfile?.display_name ||
+        "کاربر";
 
-      $("messages").innerHTML =
-        `
-        <div class="empty-state">
-          هنوز پیامی وجود ندارد.<br>
-          اولین پیام رو بفرست 👋
-        </div>
-        `;
 
-    } else {
-
-      $("messages").innerHTML =
+      $("profileEmail").textContent =
+        currentUser?.email ||
         "";
 
 
-      messages.forEach(
-        addMessageToScreen
+      $("editDisplayName").value =
+        currentProfile?.display_name ||
+        "";
+
+
+      const avatar =
+        $("profileAvatar");
+
+
+      if (
+        currentProfile?.avatar_url
+      ) {
+
+        avatar.innerHTML =
+          `
+          <img
+            src="${escapeHtml(
+              currentProfile.avatar_url
+            )}"
+            alt=""
+          >
+          `;
+
+      } else {
+
+        avatar.textContent =
+          (
+            currentProfile?.display_name ||
+            "👤"
+          ).charAt(0);
+
+      }
+
+    }
+
+
+    async function saveProfile() {
+
+      const name =
+        String(
+          $("editDisplayName").value || ""
+        )
+        .trim();
+
+
+      if (!name) {
+
+        alert(
+          "لطفاً نام نمایشی را وارد کن."
+        );
+
+        return;
+
+      }
+
+
+      $("saveProfileBtn").disabled =
+        true;
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("profiles")
+          .update({
+            display_name: name
+          })
+          .eq(
+            "id",
+            currentUser.id
+          );
+
+
+      $("saveProfileBtn").disabled =
+        false;
+
+
+      if (error) {
+
+        console.error(
+          "PROFILE UPDATE ERROR:",
+          error
+        );
+
+        alert(
+          "ذخیره ناموفق بود."
+        );
+
+        return;
+
+      }
+
+
+      currentProfile.display_name =
+        name;
+
+
+      $("profileName").textContent =
+        name;
+
+
+      $("welcomeText").textContent =
+        "سلام " +
+        name +
+        " 👋";
+
+
+      await loadUsers();
+
+
+      alert(
+        "نام نمایشی ذخیره شد."
       );
 
     }
 
 
-    scrollMessagesToBottom();
+    function backHome() {
 
-  }
+      $("profilePage")
+        .classList.add("hidden");
 
+      $("homePage")
+        .classList.remove("hidden");
 
-  /* =========================================================
-     ADD MESSAGE
-  ========================================================= */
-
-  function addMessageToScreen(
-    message
-  ) {
-
-    if (!message) {
-      return;
     }
 
 
-    const messagesBox =
-      $("messages");
-
-
-    if (!messagesBox) {
-      return;
-    }
-
-
-    if (
-      messagesBox.querySelector(
-        `[data-message-id="${message.id}"]`
-      )
+    async function openChat(
+      userId
     ) {
-      return;
+
+      const user =
+        allUsers.find(
+          u =>
+            u.id === userId
+        );
+
+
+      if (!user) return;
+
+
+      currentChatUser =
+        user;
+
+
+      $("chatUserName")
+        .textContent =
+        user.display_name ||
+        "کاربر";
+
+
+      if (user.avatar_url) {
+
+        $("chatAvatar").innerHTML =
+          `
+          <img
+            src="${escapeHtml(
+              user.avatar_url
+            )}"
+            alt=""
+          >
+          `;
+
+      } else {
+
+        $("chatAvatar").textContent =
+          (
+            user.display_name ||
+            "👤"
+          ).charAt(0);
+
+      }
+
+
+      $("chatPage")
+        .classList.remove("hidden");
+
+
+      await loadMessages();
+
+
+      $("chatInput")
+        .focus();
+
+
+      subscribeToMessages();
+
     }
 
 
-    const empty =
-      messagesBox.querySelector(
-        ".empty-state"
-      );
+    function closeChat() {
+
+      $("chatPage")
+        .classList.add("hidden");
 
 
-    if (empty) {
-      empty.remove();
+      currentChatUser =
+        null;
+
+
+      if (realtimeChannel) {
+
+        supabaseClient
+          .removeChannel(
+            realtimeChannel
+          );
+
+        realtimeChannel =
+          null;
+
+      }
+
     }
 
 
-    const mine =
-      message.sender_id ===
-      currentUser.id;
+    async function loadMessages() {
+
+      if (
+        !currentChatUser ||
+        !currentUser
+      ) return;
 
 
-    const row =
-      document.createElement(
-        "div"
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("messages")
+          .select(
+            "id,sender_id,receiver_id,content,created_at"
+          )
+          .or(
+            `and(sender_id.eq.${currentUser.id},receiver_id.eq.${currentChatUser.id}),and(sender_id.eq.${currentChatUser.id},receiver_id.eq.${currentUser.id})`
+          )
+          .order(
+            "created_at",
+            {
+              ascending: true
+            }
+          );
+
+
+      if (error) {
+
+        console.error(
+          "MESSAGES ERROR:",
+          error
+        );
+
+        $("chatMessages").innerHTML =
+          `
+          <div class="empty-state">
+            خطا در دریافت پیام‌ها
+          </div>
+          `;
+
+        return;
+
+      }
+
+
+      renderMessages(
+        data || []
       );
 
-
-    row.className =
-      "message-row " +
-      (
-        mine
-          ? "mine"
-          : "theirs"
-      );
-
-
-    row.dataset.messageId =
-      message.id;
-
-
-    const bubble =
-      document.createElement(
-        "div"
-      );
-
-
-    bubble.className =
-      "message-bubble";
-
-
-    const content =
-      document.createElement(
-        "div"
-      );
-
-
-    content.textContent =
-      message.content;
-
-
-    const time =
-      document.createElement(
-        "div"
-      );
-
-
-    time.className =
-      "message-time";
-
-
-    time.textContent =
-      formatTime(
-        message.created_at
-      );
-
-
-    bubble.appendChild(
-      content
-    );
-
-
-    bubble.appendChild(
-      time
-    );
-
-
-    row.appendChild(
-      bubble
-    );
-
-
-    messagesBox.appendChild(
-      row
-    );
-
-
-    scrollMessagesToBottom();
-
-  }
-
-
-  /* =========================================================
-     SCROLL
-  ========================================================= */
-
-  function scrollMessagesToBottom() {
-
-    const box =
-      $("messages");
-
-
-    if (!box) {
-      return;
     }
 
 
-    setTimeout(
-      () => {
-
-        box.scrollTop =
-          box.scrollHeight;
-
-      },
-      30
-    );
-
-  }
-
-
-  /* =========================================================
-     SEND MESSAGE
-  ========================================================= */
-
-  async function sendMessage() {
-
-    if (
-      !currentUser ||
-      !selectedUser
+    function renderMessages(
+      messages
     ) {
-      return;
+
+      const box =
+        $("chatMessages");
+
+
+      if (!messages.length) {
+
+        box.innerHTML =
+          `
+          <div class="empty-state">
+            هنوز پیامی وجود ندارد.<br>
+            اولین پیام را تو بفرست 👋
+          </div>
+          `;
+
+        return;
+
+      }
+
+
+      box.innerHTML =
+        messages
+          .map(
+            message => {
+
+              const mine =
+                message.sender_id ===
+                currentUser.id;
+
+
+              return `
+                <div
+                  class="message ${
+                    mine
+                      ? "mine"
+                      : "theirs"
+                  }"
+                >
+                  ${escapeHtml(
+                    message.content
+                  )}
+                </div>
+              `;
+
+            }
+          )
+          .join("");
+
+
+      box.scrollTop =
+        box.scrollHeight;
+
     }
 
 
-    const input =
-      $("messageInput");
+    async function sendMessage() {
+
+      if (
+        !currentChatUser ||
+        !currentUser
+      ) return;
 
 
-    const content =
-      input.value.trim();
+      const input =
+        $("chatInput");
 
 
-    if (!content) {
-      return;
-    }
+      const content =
+        String(
+          input.value || ""
+        ).trim();
 
 
-    const button =
-      $("sendButton");
+      if (!content) return;
 
 
-    button.disabled =
-      true;
+      input.value = "";
 
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("messages")
-        .insert(
-          {
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("messages")
+          .insert({
             sender_id:
               currentUser.id,
 
             receiver_id:
-              selectedUser.id,
+              currentChatUser.id,
 
             content:
               content
-          }
-        )
-        .select(
-          "id,sender_id,receiver_id,content,created_at"
-        )
-        .single();
+          });
 
 
-    button.disabled =
-      false;
+      if (error) {
 
-
-    if (error) {
-
-      console.error(
-        "SEND MESSAGE ERROR:",
-        error
-      );
-
-
-      alert(
-        "ارسال پیام انجام نشد."
-      );
-
-
-      return;
-    }
-
-
-    input.value =
-      "";
-
-
-    input.style.height =
-      "43px";
-
-
-    addMessageToScreen(
-      data
-    );
-
-  }
-
-
-  /* =========================================================
-     ENTER
-  ========================================================= */
-
-  function handleMessageKey(
-    event
-  ) {
-
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
-
-      event.preventDefault();
-
-      sendMessage();
-
-    }
-
-  }
-
-
-  /* =========================================================
-     REALTIME
-  ========================================================= */
-
-  function startMessagesRealtime() {
-
-    stopMessagesRealtime();
-
-
-    if (
-      !currentUser ||
-      !selectedUser
-    ) {
-      return;
-    }
-
-
-    const myId =
-      currentUser.id;
-
-
-    const otherId =
-      selectedUser.id;
-
-
-    messagesChannel =
-      supabaseClient
-        .channel(
-          "messages-" +
-          myId +
-          "-" +
-          otherId +
-          "-" +
-          Date.now()
-        )
-        .on(
-          "postgres_changes",
-          {
-            event: "INSERT",
-            schema: "public",
-            table: "messages"
-          },
-          payload => {
-
-            const message =
-              payload.new;
-
-
-            const belongsToChat =
-              (
-                message.sender_id === myId &&
-                message.receiver_id === otherId
-              )
-              ||
-              (
-                message.sender_id === otherId &&
-                message.receiver_id === myId
-              );
-
-
-            if (!belongsToChat) {
-              return;
-            }
-
-
-            addMessageToScreen(
-              message
-            );
-
-          }
-        )
-        .subscribe(
-          (
-            status,
-            error
-          ) => {
-
-            console.log(
-              "REALTIME STATUS:",
-              status,
-              error || ""
-            );
-
-          }
+        console.error(
+          "SEND MESSAGE ERROR:",
+          error
         );
 
-  }
+        alert(
+          "پیام ارسال نشد."
+        );
+
+        input.value =
+          content;
+
+      }
+
+    }
 
 
-  function stopMessagesRealtime() {
+    function subscribeToMessages() {
 
-    if (!messagesChannel) {
-      return;
+      if (realtimeChannel) {
+
+        supabaseClient
+          .removeChannel(
+            realtimeChannel
+          );
+
+      }
+
+
+      realtimeChannel =
+        supabaseClient
+          .channel(
+            "chat-" +
+            currentUser.id +
+            "-" +
+            currentChatUser.id
+          )
+          .on(
+            "postgres_changes",
+            {
+              event: "INSERT",
+              schema: "public",
+              table: "messages"
+            },
+            payload => {
+
+              const message =
+                payload.new;
+
+
+              if (
+                (
+                  message.sender_id ===
+                    currentUser.id &&
+                  message.receiver_id ===
+                    currentChatUser.id
+                ) ||
+                (
+                  message.sender_id ===
+                    currentChatUser.id &&
+                  message.receiver_id ===
+                    currentUser.id
+                )
+              ) {
+
+                loadMessages();
+
+              }
+
+            }
+          )
+          .subscribe();
+
+    }
+
+
+    async function login() {
+
+      hideAuthMessage();
+
+
+      const email =
+        $("loginEmail")
+          .value
+          .trim();
+
+
+      const password =
+        $("loginPassword")
+          .value;
+
+
+      if (
+        !email ||
+        !password
+      ) {
+
+        showAuthMessage(
+          "ایمیل و رمز عبور را وارد کن."
+        );
+
+        return;
+
+      }
+
+
+      $("loginBtn").disabled =
+        true;
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+
+      $("loginBtn").disabled =
+        false;
+
+
+      if (error) {
+
+        console.error(
+          "LOGIN ERROR:",
+          error
+        );
+
+        showAuthMessage(
+          "ایمیل یا رمز عبور اشتباه است."
+        );
+
+        return;
+
+      }
+
+
+      await loadApp(
+        data.user
+      );
+
+    }
+
+
+    async function signup() {
+
+      hideAuthMessage();
+
+
+      const name =
+        $("signupName")
+          .value
+          .trim();
+
+
+      const email =
+        $("signupEmail")
+          .value
+          .trim();
+
+
+      const password =
+        $("signupPassword")
+          .value;
+
+
+      if (!name) {
+
+        showAuthMessage(
+          "نام نمایشی را وارد کن."
+        );
+
+        return;
+
+      }
+
+
+      if (!email) {
+
+        showAuthMessage(
+          "ایمیل را وارد کن."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        password.length < 6
+      ) {
+
+        showAuthMessage(
+          "رمز عبور باید حداقل ۶ کاراکتر باشد."
+        );
+
+        return;
+
+      }
+
+
+      $("signupBtn").disabled =
+        true;
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              display_name: name
+            }
+          }
+        });
+
+
+      $("signupBtn").disabled =
+        false;
+
+
+      if (error) {
+
+        console.error(
+          "SIGNUP ERROR:",
+          error
+        );
+
+        showAuthMessage(
+          error.message ||
+          "ثبت‌نام انجام نشد."
+        );
+
+        return;
+
+      }
+
+
+      if (data.user) {
+
+        /*
+          پروفایل تازه ساخته می‌شود
+          و approved به صورت پیش‌فرض false است.
+        */
+
+        await createProfile(
+          data.user,
+          name
+        );
+
+      }
+
+
+      showAuthMessage(
+        "ثبت‌نام انجام شد. حساب شما باید توسط مدیر تأیید شود. بعد از تأیید می‌توانید وارد برنامه شوید."
+      );
+
+    }
+
+
+    async function logout() {
+
+      if (realtimeChannel) {
+
+        await supabaseClient
+          .removeChannel(
+            realtimeChannel
+          );
+
+        realtimeChannel =
+          null;
+
+      }
+
+
+      await supabaseClient.auth.signOut();
+
+      currentUser =
+        null;
+
+      currentProfile =
+        null;
+
+      currentChatUser =
+        null;
+
+
+      $("appPage")
+        .classList.add("hidden");
+
+      $("chatPage")
+        .classList.add("hidden");
+
+      $("profilePage")
+        .classList.add("hidden");
+
+      $("homePage")
+        .classList.remove("hidden");
+
+
+      showAuth();
+
+    }
+
+
+    /* EVENTS */
+
+
+    $("loginBtn")
+      .addEventListener(
+        "click",
+        login
+      );
+
+
+    $("signupBtn")
+      .addEventListener(
+        "click",
+        signup
+      );
+
+
+    $("showSignupBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          hideAuthMessage();
+
+          $("loginForm")
+            .classList.add("hidden");
+
+          $("signupForm")
+            .classList.remove("hidden");
+
+        }
+      );
+
+
+    $("showLoginBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          hideAuthMessage();
+
+          $("signupForm")
+            .classList.add("hidden");
+
+          $("loginForm")
+            .classList.remove("hidden");
+
+        }
+      );
+
+
+    $("logoutBtn")
+      .addEventListener(
+        "click",
+        logout
+      );
+
+
+    $("profileBtn")
+      .addEventListener(
+        "click",
+        showProfile
+      );
+
+
+    $("backHomeBtn")
+      .addEventListener(
+        "click",
+        backHome
+      );
+
+
+    $("saveProfileBtn")
+      .addEventListener(
+        "click",
+        saveProfile
+      );
+
+
+    $("searchInput")
+      .addEventListener(
+        "input",
+        searchUsers
+      );
+
+
+    $("closeChatBtn")
+      .addEventListener(
+        "click",
+        closeChat
+      );
+
+
+    $("sendBtn")
+      .addEventListener(
+        "click",
+        sendMessage
+      );
+
+
+    $("chatInput")
+      .addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key ===
+            "Enter"
+          ) {
+
+            event.preventDefault();
+
+            sendMessage();
+
+          }
+
+        }
+      );
+
+
+    $("loginPassword")
+      .addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key ===
+            "Enter"
+          ) {
+
+            login();
+
+          }
+
+        }
+      );
+
+
+    $("signupPassword")
+      .addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key ===
+            "Enter"
+          ) {
+
+            signup();
+
+          }
+
+        }
+      );
+
+
+    /* AUTH STATE */
+
+
+    async function init() {
+
+      try {
+
+        const {
+          data
+        } =
+          await supabaseClient
+            .auth
+            .getSession();
+
+
+        if (
+          data.session?.user
+        ) {
+
+          await loadApp(
+            data.session.user
+          );
+
+        } else {
+
+          showAuth();
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "INIT ERROR:",
+          error
+        );
+
+        showAuth();
+
+      }
+
     }
 
 
     supabaseClient
-      .removeChannel(
-        messagesChannel
-      );
-
-
-    messagesChannel =
-      null;
-
-  }
-
-
-  /* =========================================================
-     LOGOUT
-  ========================================================= */
-
-  async function logout() {
-
-    stopMessagesRealtime();
-
-
-    await supabaseClient.auth
-      .signOut();
-
-
-    currentUser =
-      null;
-
-
-    currentProfile =
-      null;
-
-
-    selectedUser =
-      null;
-
-
-    $("appPage")
-      .classList
-      .add("hidden");
-
-
-    $("authPage")
-      .classList
-      .remove("hidden");
-
-
-    showLogin();
-
-  }
-
-
-  /* =========================================================
-     AUTH STATE
-  ========================================================= */
-
-  supabaseClient.auth
-    .onAuthStateChange(
-      async (
-        event,
-        session
-      ) => {
-
-        console.log(
-          "AUTH EVENT:",
-          event
-        );
-
-
-        if (
-          session &&
-          session.user
-        ) {
-
-          currentUser =
-            session.user;
-
+      .auth
+      .onAuthStateChange(
+        async (
+          event,
+          session
+        ) => {
 
           if (
             event ===
-            "PASSWORD_RECOVERY"
+              "SIGNED_OUT"
           ) {
 
-            showAuthPage();
-
-            showResetPassword();
+            showAuth();
 
             return;
-          }
 
+          }
 
           if (
-            $("appPage")
-              .classList
-              .contains("hidden")
+            event ===
+              "SIGNED_IN" &&
+            session?.user
           ) {
 
-            await loadApp();
+            await loadApp(
+              session.user
+            );
 
           }
 
-        } else {
-
-          showAuthPage();
-
         }
-
-      }
-    );
-
-
-  /* =========================================================
-     STARTUP
-  ========================================================= */
-
-  async function startApp() {
-
-    try {
-
-      const {
-        data: {
-          session
-        }
-      } =
-        await supabaseClient
-          .auth
-          .getSession();
-
-
-      if (
-        session &&
-        session.user
-      ) {
-
-        currentUser =
-          session.user;
-
-
-        await loadApp();
-
-      } else {
-
-        showAuthPage();
-
-      }
-
-    } catch (error) {
-
-      console.error(
-        "START ERROR:",
-        error
       );
 
 
-      showAuthPage();
+    /* SERVICE WORKER */
 
-    } finally {
 
-      $("loading")
-        .classList
-        .add("hidden");
+    if (
+      "serviceWorker" in navigator
+    ) {
+
+      window.addEventListener(
+        "load",
+        () => {
+
+          navigator
+            .serviceWorker
+            .register(
+              "./service-worker.js"
+            )
+            .catch(
+              error =>
+                console.error(
+                  "SW ERROR:",
+                  error
+                )
+            );
+
+        }
+      );
 
     }
 
-  }
 
+    init();
 
-  /* =========================================================
-     AUTO RESIZE
-  ========================================================= */
-
-  $("messageInput")
-    .addEventListener(
-      "input",
-      function() {
-
-        this.style.height =
-          "43px";
-
-
-        this.style.height =
-          Math.min(
-            this.scrollHeight,
-            110
-          ) + "px";
-
-      }
-    );
-
-
-  /* =========================================================
-     SERVICE WORKER
-  ========================================================= */
-
-  if (
-    "serviceWorker" in navigator
-  ) {
-
-    window.addEventListener(
-      "load",
-      () => {
-
-        navigator.serviceWorker
-          .register(
-            "./service-worker.js"
-          )
-          .then(
-            registration => {
-
-              console.log(
-                "Dostaneh PWA فعال شد:",
-                registration.scope
-              );
-
-            }
-          )
-          .catch(
-            error => {
-
-              console.error(
-                "PWA ERROR:",
-                error
-              );
-
-            }
-          );
-
-      }
-    );
-
-  }
-
-
-  /* =========================================================
-     START
-  ========================================================= */
-
-  startApp();
-
-</script>
+  </script>
 
 </body>
 </html>
